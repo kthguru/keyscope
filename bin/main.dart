@@ -17,17 +17,16 @@
 import 'dart:io';
 import 'package:args/args.dart';
 import 'package:keyscope/keyscope.dart';
-// import 'package:valkey_client/valkey_client.dart'; 
+// import 'package:valkey_client/valkey_client.dart';
 
 void main(List<String> arguments) async {
-
   // e.g., keyscope --ping
   final parser = ArgParser()
     ..addOption('host', abbr: 'h', defaultsTo: 'localhost', help: 'Target host')
     ..addOption('port', abbr: 'p', defaultsTo: '6379', help: 'Target port')
     ..addFlag('ping', help: 'Check connectivity (PING/PONG)', negatable: false)
-    ..addFlag('help', abbr: '?', help: 'Show usage information', 
-      negatable: false);
+    ..addFlag('help',
+        abbr: '?', help: 'Show usage information', negatable: false);
 
   try {
     final results = parser.parse(arguments);
@@ -46,7 +45,6 @@ void main(List<String> arguments) async {
     } else {
       print('No command specified. Use --help for usage.');
     }
-
   } catch (e) {
     print('Error: $e');
     exit(1);
@@ -55,11 +53,11 @@ void main(List<String> arguments) async {
 
 Future<void> _runPingTest(String host, int port) async {
   print('Running PING test on $host:$port...');
-  
+
   // Here we use the Repository logic defined in lib/
   // Since we are in CLI (no Riverpod), we instantiate the repository directly.
   final repo = BasicConnectionRepository();
-  
+
   try {
     // In the future, this will return real connection status
     await repo.connect(host: host, port: port);
