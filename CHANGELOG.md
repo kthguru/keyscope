@@ -1,5 +1,15 @@
 # Changelog
 
-## 0.1.0
+## 0.2.0
+* **New Feature:** Added Connection Manager GUI.
+    * Supports Redis & Valkey connections.
+    * Create, edit, and save connection configurations.
+    * Support for Username/Password authentication (ACL).
+* **New Feature:** Real-time Dashboard.
+    * Visualizes Server info, Memory usage, and Client stats.
+    * Automatic data fetching via `INFO` command.
+* **CLI:** Enhanced `keyscope` CLI with connectivity check (`--ping`).
+    * CLI diagnostic tool (`keyscope --ping`).
 
-Initial release
+## 0.1.0
+* Initial placeholder release.
