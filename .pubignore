@@ -42,3 +42,10 @@ PREFLIGHT.md
 CONTRIBUTING.md
 CLI.md
 analysis_options.yaml
+
+# Ignore CLI related generated files
+bin/keyscope/
+#\ bin/keyscope/bundle/bin/keyscope
+#\ bin/keyscope/bundle/lib/objective_c.dylib
+bin/keyscope-*.dart
+bin/keyscope_*.dart
