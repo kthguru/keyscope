@@ -52,3 +52,6 @@ bin/keyscope_*.dart
 
 # No DevTools configuration
 devtools_options.yaml
+
+# Ignore generated files for multilingual
+lib/i18n.dart
