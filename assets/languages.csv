@@ -1,0 +1,8 @@
+keys,en,ko,ja,zh_CN,zh_TW,id,vi,th,de,de_CH,fr,it,es,ru,pt_PT,pt_BR
+otherKeys,en,ko,ja,zh_Hans,zh_Hant,id,vi,th,de,de_ch,fr,it,es,ru,pt_PT,pt_BR
+languageTitle,English,한국어,日本語,简体中文,繁體中文,Bahasa Indonesia,Tiếng Việt,ภาษาไทย,Deutsch,Schweizerdeutsch,Français,Italiano,Español,Русский,Português (Portugal),Português (Brasil)
+plainText,Hello world!,안녕하세요!,ハローワールド！,你好，世界！,你好，世界！,Halo dunia!,Chào thế giới!,สวัสดีชาวโลก!,Hallo Welt!,Hallo Welt!,Bonjour le monde !,Ciao mondo!,¡Hola mundo!,"Привет, мир!",Olá mundo!,Olá mundo!
+welcome,Welcome %name$s!,"%name$s님, 환영합니다!",ようこそ、%name$sさん！,欢迎 %name$s！,歡迎 %name$s！,Selamat datang %name$s!,Chào mừng %name$s!,ยินดีต้อนรับ %name$s!,Willkommen %name$s!,Willkomme %name$s!,Bienvenue %name$s !,Benvenuto %name$s!,¡Bienvenido %name$s!,"Добро пожаловать, %name$s!",Bem-vindo %name$s!,Bem-vindo %name$s!
+language,Language,언어,言語,语言,語言,Bahasa,Ngôn ngữ,ภาษา,Sprache,Sprach,Langue,Lingua,Idioma,Язык,Idioma,Idioma
+chooseYourLanguage,Choose your language,언어를 선택하세요,言語を選択してください,选择你的语言,選擇您的語言,Pilih bahasamu,Chọn ngôn ngữ của bạn,เลือกภาษาของคุณ,Wähle deine Sprache,Wähl dini Sprach,Choisissez votre langue,Scegli la tua lingua,Elige tu idioma,Выберите язык,Escolhe o teu idioma,Escolha seu idioma
+home,Home,홈,ホーム,主页,首頁,Beranda,Trang chủ,หน้าหลัก,Startseite,Startsite,Accueil,Home,Inicio,Главная,Início,Início
