@@ -1,4 +1,5 @@
-name: Build GUI for Keyscope
+# Build GUI for Keyscope
+name: GUI
 
 on:
   push:
