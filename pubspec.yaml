@@ -15,7 +15,7 @@
 #
 name: keyscope
 description: A high-performance GUI for Redis & Valkey. Supports Cluster, Sentinel, SSH, and millions of keys. Built with valkey_client & dense_table.
-version: 0.3.0
+version: 0.3.1
 homepage: https://github.com/infradise/keyscope
 repository: https://github.com/infradise/keyscope
 issue_tracker: https://github.com/infradise/keyscope/issues
