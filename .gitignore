@@ -46,6 +46,8 @@ bin/keyscope/bundle/lib/objective_c.dylib
 .pub/
 /build/
 /coverage/
+# https://docs.flutter.dev/tools/devtools/extensions#configure-extension-enablement-states
+devtools_options.yaml
 
 # Pub spec
 # Avoid committing pubspec.lock for library packages; see
