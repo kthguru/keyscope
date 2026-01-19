@@ -14,7 +14,7 @@ Returns `PONG` as String
 keyscope --ping
 ```
 
-## `--set`
+## `--set` or `set`
 
 ```sh
 keyscope --set my_key my_value
@@ -28,7 +28,7 @@ OR
 keyscope set -k my_key -v my_value
 ```
 
-## `--get`
+## `--get` or `get`
 
 Returns `my_value`
 
