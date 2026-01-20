@@ -117,7 +117,11 @@ void main(List<String> arguments) async {
           // if (results['ping'] as bool) {}
           //
           if (results.wasParsed('set')) {
-            final values = results['set'] as List<String>;
+            final optionValues =
+                List<String>.from(results['set'] as List<String>);
+            final rest = results.rest;
+            final values = [...optionValues, ...rest];
+
             if (values.length >= 2) {
               final key = values[0];
               final value = values[1];
