@@ -109,6 +109,16 @@ abstract class ConnectionRepository {
 
   /// Indicates whether SSH Tunneling is supported.
   bool get isSshSupported;
+
+  Future<void> setHashField(String key, String field, String value) async {}
+  Future<void> deleteHashField(String key, String field) async {}
+  Future<void> addListItem(String key, String value) async {}
+  Future<void> updateListItem(String key, int index, String value) async {}
+  Future<void> removeListValue(String key, String value) async {}
+  Future<void> addSetMember(String key, String member) async {}
+  Future<void> removeSetMember(String key, String member) async {}
+  Future<void> addZSetMember(String key, num score, String member) async {}
+  Future<void> removeZSetMember(String key, String member) async {}
 }
 
 /// [OSS Version] Default implementation of ConnectionRepository (valkey_client)
@@ -444,6 +454,90 @@ class BasicConnectionRepository implements ConnectionRepository {
 
   @override
   bool get isSshSupported => false;
+
+  // --- Hash Operations ---
+
+  /// Set a field in a Hash.
+  @override
+  Future<void> setHashField(String key, String field, String value) async {
+    if (_client == null) throw Exception('Not connected');
+    // await _client!.execute(['HSET', key, field, value]);
+    await _client!.hset(key, field, value);
+  }
+
+  /// Delete a field from a Hash.
+  @override
+  Future<void> deleteHashField(String key, String field) async {
+    if (_client == null) throw Exception('Not connected');
+    await _client!.execute(['HDEL', key, field]);
+    // TODO: add to valkey_client
+    // await _client!.hdel(key, field);
+  }
+
+  // --- List Operations ---
+
+  /// Append an item to a List (Right Push).
+  @override
+  Future<void> addListItem(String key, String value) async {
+    if (_client == null) throw Exception('Not connected');
+    // await _client!.execute(['RPUSH', key, value]);
+    await _client!.rpush(key, value);
+  }
+
+  /// Update a List item by index.
+  @override
+  Future<void> updateListItem(String key, int index, String value) async {
+    if (_client == null) throw Exception('Not connected');
+    await _client!.execute(['LSET', key, index.toString(), value]);
+    // TODO: add to valkey_client
+    // await _client!.lset(key, index.toString(), value);
+  }
+
+  /// Remove items from a List.
+  /// LREM key count value (count 0 means remove all occurrences).
+  @override
+  Future<void> removeListValue(String key, String value) async {
+    if (_client == null) throw Exception('Not connected');
+    await _client!.execute(['LREM', key, '0', value]);
+    // TODO: add to valkey_client
+    // await _client!.lrem(key, '0', value);
+  }
+
+  // --- Set Operations ---
+
+  /// Add a member to a Set.
+  @override
+  Future<void> addSetMember(String key, String member) async {
+    if (_client == null) throw Exception('Not connected');
+    // await _client!.execute(['SADD', key, member]);
+    await _client!.sadd(key, member);
+  }
+
+  /// Remove a member from a Set.
+  @override
+  Future<void> removeSetMember(String key, String member) async {
+    if (_client == null) throw Exception('Not connected');
+    // await _client!.execute(['SREM', key, member]);
+    await _client!.srem(key, member);
+  }
+
+  // --- Sorted Set (ZSet) Operations ---
+
+  /// Add or Update a member in a ZSet.
+  @override
+  Future<void> addZSetMember(String key, num score, String member) async {
+    if (_client == null) throw Exception('Not connected');
+    // await _client!.execute(['ZADD', key, score.toString(), member]);
+    await _client!.zadd(key, score.toDouble(), member);
+  }
+
+  /// Remove a member from a ZSet.
+  @override
+  Future<void> removeZSetMember(String key, String member) async {
+    if (_client == null) throw Exception('Not connected');
+    // await _client!.execute(['ZREM', key, member]);
+    await _client!.zrem(key, member);
+  }
 }
 
 /// A global provider for [ConnectionRepository].
