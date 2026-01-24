@@ -48,12 +48,10 @@ dependencies:
   system_theme: ^3.2.0
   toastification: ^3.0.3
   uuid: ^4.5.2
-  # valkey_client: ^2.5.0
-  # valkey_client: ^2.5.1
+  valkey_client: ^2.5.1
   # --- for debugging ---
-  valkey_client:
-    # path: valkey_client
-    path: ../valkey_client
+  # valkey_client:
+  #   path: ../valkey_client
   # valkey_client:
   #   git:
   #     url: https://github.com/infradise/valkey_client
