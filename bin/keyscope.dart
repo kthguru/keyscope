@@ -138,7 +138,8 @@ void main(List<String> arguments) async {
       // Handle Commands
       switch (results.command?.name) {
         case 'ping':
-          await ping(valkeyClient);
+          final response = await ping(valkeyClient);
+          print(response);
           await close(valkeyClient);
           break;
         case 'set':
