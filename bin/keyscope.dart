@@ -78,8 +78,14 @@ void main(List<String> arguments) async {
     ..addOption('password', abbr: 'a', help: 'Password')
     // --db
     ..addOption('db', help: 'Database (defaults to 0)')
+    // --insecure
+    ..addFlag('insecure', help: '', negatable: false)
     // --ssl
-    ..addFlag('ssl', help: 'SSL/TLS/mTLS', negatable: false)
+    ..addFlag('ssl', help: '', negatable: false)
+    // --tls
+    ..addFlag('tls', help: '', negatable: false)
+    // --tls-auth-clients (mTLS)
+    ..addFlag('tls-auth-clients', help: '', negatable: false)
     // --slient
     ..addFlag('silent', help: '(Silent mode) Hide all logs', negatable: false)
     // --scan
@@ -112,10 +118,28 @@ void main(List<String> arguments) async {
     try {
       final host = results['host'] as String;
       final port = int.parse(results['port'] as String);
+
+      // Need to use `tls-port` instead of `port`.
+      // \ --tls-auth-clients
+      // \ --tls-cert-file
+      // See also:
+      //   * https://valkey.io/topics/encryption
+
       final username = results['username'] as String?;
       final password = results['password'] as String?;
       final db = results['db'] as int? ?? 0;
+
       final ssl = results['ssl'] as bool? ?? false;
+      final tls = results['tls'] as bool? ?? false;
+
+      final useTls = ssl | tls;
+
+      final insecure = results['insecure'] as bool? ?? false;
+      // \ --insecure-skip-tls-verify
+      // \ --no-check-certificate
+
+      // mTLS
+      // final tlsAuthClients = results['tls-auth-clients'] as bool? ?? false;
 
       // Instantiate the repository directly (No Riverpod needed for CLI)
       // -- final repo = BasicConnectionRepository();
@@ -124,9 +148,11 @@ void main(List<String> arguments) async {
       final settings = ValkeyConnectionSettings(
         host: host,
         port: port,
+        // tlsPort: tlsPort,
         username: username,
         password: password,
-        useSsl: ssl,
+        useSsl: useTls,
+        onBadCertificate: (cert) => insecure,
         database: db,
       );
 

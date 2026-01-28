@@ -9,6 +9,26 @@ Returns `PONG` as String
 keyscope ping
 ```
 
+```sh
+dart run bin/keyscope.dart ping --port 6379 --tls --insecure --silent
+PONG
+```
+
+```sh
+dart run bin/keyscope.dart ping --tls --insecure --silent
+PONG
+```
+
+```sh
+dart run bin/keyscope.dart ping --port 6379 --ssl --insecure --silent
+PONG
+```
+
+```sh
+dart run bin/keyscope.dart ping --ssl --insecure --silent
+PONG
+```
+
 ## `set`
 
 ```sh
