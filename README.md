@@ -15,7 +15,7 @@
   <!-- ![Build Status](https://img.shields.io/github/actions/workflow/status/infradise/keyscope/build.yml?branch=main) -->
 
   <p>
-    <a href="https://www.buymeacoffee.com/Infradise" target="_blank">
+    <a href="https://www.buymeacoffee.com/keyscope.dev" target="_blank">
         <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 45px !important;width: 162px !important;">
     </a>
   </p>
