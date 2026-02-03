@@ -208,8 +208,7 @@ class BasicConnectionRepository implements ConnectionRepository {
           value = await _client!.lRange(key, 0, -1);
           break;
         case 'set':
-          value = await _client!.smembers(key);
-          // TODO: change to sMembers
+          value = await _client!.sMembers(key);
           break;
         case 'zset':
           // Get list with scores
@@ -349,8 +348,7 @@ class BasicConnectionRepository implements ConnectionRepository {
         break;
 
       case 'set':
-        // TODO: change to sAdd
-        await _client!.sadd(key, value.toString());
+        await _client!.sAdd(key, [value.toString()]);
         break;
 
       case 'zset':
@@ -382,10 +380,6 @@ class BasicConnectionRepository implements ConnectionRepository {
     }
   }
 
-  // Future<void> disconnect() async {
-  //   await _client.disconnect();
-  // }
-
   @override
   bool get isSshSupported => false;
 
@@ -412,7 +406,7 @@ class BasicConnectionRepository implements ConnectionRepository {
   @override
   Future<void> addListItem(String key, String value) async {
     if (_client == null) throw Exception('Not connected');
-    await _client!.rpush(key, value);
+    await _client!.rPush(key, [value]);
   }
 
   /// Update a List item by index.
@@ -436,16 +430,14 @@ class BasicConnectionRepository implements ConnectionRepository {
   @override
   Future<void> addSetMember(String key, String member) async {
     if (_client == null) throw Exception('Not connected');
-    // TODO: change to sAdd
-    await _client!.sadd(key, member);
+    await _client!.sAdd(key, [member]);
   }
 
   /// Remove a member from a Set.
   @override
   Future<void> removeSetMember(String key, String member) async {
     if (_client == null) throw Exception('Not connected');
-    // TODO: change to sRem
-    await _client!.srem(key, member);
+    await _client!.sRem(key, [member]);
   }
 
   // --- Sorted Set (ZSet) Operations ---
