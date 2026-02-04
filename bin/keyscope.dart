@@ -15,13 +15,12 @@
  */
 
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'package:args/args.dart';
 // import 'package:keyscope/src/core/keyscope_client.dart'; // TODO: REMOVE.
-import 'package:valkey_client/valkey_client.dart';
+import 'package:typeredis/typeredis.dart';
 
-ValkeyLogger logger = ValkeyLogger('Keyscope CLI');
+TRLogger logger = TRLogger('Keyscope CLI');
 
 void main(List<String> arguments) async {
   final setCommand = ArgParser()
@@ -106,14 +105,14 @@ void main(List<String> arguments) async {
   try {
     final results = parser.parse(arguments);
 
-    logger.setEnableValkeyLog(!(results['silent'] as bool));
+    logger.setEnableTRLog(!(results['silent'] as bool));
 
     if (results['help'] as bool) {
       showUsages(parser);
       exit(0);
     }
 
-    ValkeyClient? valkeyClient;
+    TRClient? trClient;
 
     try {
       final host = results['host'] as String;
@@ -145,7 +144,7 @@ void main(List<String> arguments) async {
       // -- final repo = BasicConnectionRepository();
       // -- await repo.connect(host: host, port: port, password: password);
 
-      final settings = ValkeyConnectionSettings(
+      final settings = TRConnectionSettings(
         host: host,
         port: port,
         // tlsPort: tlsPort,
@@ -156,43 +155,43 @@ void main(List<String> arguments) async {
         database: db,
       );
 
-      valkeyClient = ValkeyClient.fromSettings(settings);
+      valkeyClient = TRClient.fromSettings(settings);
 
       // Connect
-      await connect(valkeyClient);
+      await connect(trClient);
 
       // Handle Commands
       switch (results.command?.name) {
         case 'ping':
-          final response = await ping(valkeyClient);
+          final response = await ping(trClient);
           print(response);
-          await close(valkeyClient);
+          await close(trClient);
           break;
         case 'set':
           final key = results.command?['key'] as String;
           final value = results.command?['value'] as String;
-          await set(valkeyClient, key, value);
+          await set(trClient, key, value);
           break;
         case 'get':
           final key = results.command?['key'] as String;
-          await get(valkeyClient, key);
+          await get(trClient, key);
           break;
         case 'json-set':
           final key = results.command?['key'] as String;
           final path = results.command?['path'] as String;
           final data = results.command?['data'] as dynamic;
-          await jsonSet(valkeyClient, key: key, path: path, data: data);
+          await jsonSet(trClient, key: key, path: path, data: data);
           break;
         case 'json-get':
           final key = results.command?['key'] as String;
           final path = results.command?['path'] as String;
-          await jsonGet(valkeyClient, key: key, path: path);
+          await jsonGet(trClient, key: key, path: path);
           break;
         case 'scan':
           final match = results.command?['match'] as String? ?? '*';
           final count = results.command?['count'] as int? ?? 20;
           final type = results.command?['type'] as String? ?? '';
-          await scan(valkeyClient, match, count, type);
+          await scan(trClient, match, count, type);
           break;
         default:
           // Handle Options
@@ -208,7 +207,7 @@ void main(List<String> arguments) async {
             if (values.length >= 2) {
               final key = values[0];
               final value = values[1];
-              await set(valkeyClient, key, value);
+              await set(trClient, key, value);
             } else {
               logger.info(parser.usage);
             }
@@ -216,7 +215,7 @@ void main(List<String> arguments) async {
             final values = results['get'] as List<String>;
             if (values.isNotEmpty) {
               final key = values[0];
-              await get(valkeyClient, key);
+              await get(trClient, key);
             } else {
               logger.info(parser.usage);
             }
@@ -224,7 +223,7 @@ void main(List<String> arguments) async {
             final match = results['match'] as String? ?? '*';
             final count = results['count'] as int? ?? 20;
             final type = results['type'] as String? ?? '';
-            await scan(valkeyClient, match, count, type);
+            await scan(trClient, match, count, type);
           } else {
             showUsages(parser);
           }
@@ -238,8 +237,8 @@ void main(List<String> arguments) async {
       exit(1);
     } finally {
       // Cleanup
-      if (valkeyClient != null) {
-        await close(valkeyClient);
+      if (trClient != null) {
+        await close(trClient);
       }
     }
   } catch (e) {
@@ -248,7 +247,7 @@ void main(List<String> arguments) async {
   }
 }
 
-Future<String> ping(ValkeyClient client) async {
+Future<String> ping(TRClient client) async {
   logger.info('🏓 PING');
   try {
     final response = await client.ping();
@@ -262,7 +261,7 @@ Future<String> ping(ValkeyClient client) async {
   }
 }
 
-Future<void> connect(ValkeyClient client) async {
+Future<void> connect(TRClient client) async {
   final config = client.currentConnectionConfig;
   logger.info('Target host: ${config?.host}');
   logger.info('Target port: ${config?.port}');
@@ -271,7 +270,7 @@ Future<void> connect(ValkeyClient client) async {
   await client.connect();
 }
 
-// Future<void> showCurrentConnectedHostAndPort(ValkeyClient client) async {
+// Future<void> showCurrentConnectedHostAndPort(TRClient client) async {
 //   final config = client.currentConnectionConfig;
 //   logger.info(client.isConnected);
 //   if (client.isConnected && config != null) {
@@ -282,30 +281,30 @@ Future<void> connect(ValkeyClient client) async {
 //   }
 // }
 
-Future<void> close(ValkeyClient client) async {
+Future<void> close(TRClient client) async {
   await client.close();
 }
 
-Future<String?> get(ValkeyClient client, String key) async {
+Future<String?> get(TRClient client, String key) async {
   final value = await client.get(key); // unawaited(client.get(key));
   logger.info('GET: key: $key, value: $value');
   return value;
 }
 
-Future<void> set(ValkeyClient client, String key, String value) async {
+Future<void> set(TRClient client, String key, String value) async {
   logger.info('SET: key: $key, value: $value');
   await client.set(key, value); // unawaited(client.set(key, value));
 }
 
-Future<dynamic> jsonGet(ValkeyClient client,
-    {required String key, String path = r'$'}) async {
+Future<dynamic> jsonGet(TRClient client,
+    {required String key, String path = r'$.name'}) async {
   final value = await client.jsonGet(key: key, path: path);
   logger.info('GET: key: $key, path: $path, value: $value');
   return value;
 }
 
-Future<void> jsonSet(ValkeyClient client,
-    {required String key, String path = r'$', required String data}) async {
+Future<void> jsonSet(TRClient client,
+    {required String key, required dynamic data, String path = r'$'}) async {
   logger.info('SET: key: $key, path: $path, data: $data');
   await client.jsonSet(key: key, path: path, data: jsonDecode(data));
 }
@@ -325,7 +324,7 @@ void showUsages(ArgParser parser) {
 }
 
 Future<void> scan(
-    ValkeyClient client, String? match, int? count, String? type) async {
+    TRClient client, String? match, int? count, String? type) async {
   logger.info('🔍 Scanning keys (MATCH: "$match", COUNT: 20)...');
 
   final result =

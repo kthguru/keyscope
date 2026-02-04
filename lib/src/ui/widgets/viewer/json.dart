@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart' show BuildContext, SizedBox, StatelessWidget, Widget;
+import 'package:flutter/material.dart'
+    show BuildContext, SizedBox, StatelessWidget, Widget;
 
 class JsonViewer extends StatelessWidget {
   final String jsonString;
-  
+
   JsonViewer({required this.jsonString});
 
   @override

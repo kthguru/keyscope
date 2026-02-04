@@ -17,7 +17,7 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:valkey_client/valkey_client.dart';
+import 'package:typeredis/typeredis.dart';
 
 // import '../../../core/keyscope_client.dart' show KeyscopeClient;
 // import '../../../../src/core/keyscope_client.dart';
@@ -43,12 +43,12 @@ class KeyDetail {
 //
 abstract class ConnectionRepository {
   /// The active client instance.
-  /// Returns [ValkeyClient] or null if not connected.
-  ValkeyClient? get _client;
+  /// Returns [TRClient] or null if not connected.
+  TRClient? get _client;
 
   // final KeyscopeClient _client = KeyscopeClient();
   // Expose the raw client (optional)
-  // ValkeyClient? get rawClient => _client.rawClient;
+  // TRClient? get rawClient => _client.rawClient;
 
   bool get isConnected => _client?.isConnected ?? false;
 
@@ -121,7 +121,7 @@ abstract class ConnectionRepository {
 /// features like SSH Tunneling or dedicated support.
 class BasicConnectionRepository implements ConnectionRepository {
   @override
-  ValkeyClient? _client = ValkeyClient();
+  TRClient? _client = TRClient();
   // KeyscopeClient _client = KeyscopeClient();
 
   @override
@@ -140,7 +140,7 @@ class BasicConnectionRepository implements ConnectionRepository {
     // - No Auth
     // - Password only (Legacy)
     // - Username + Password (ACL)
-    final newClient = ValkeyClient(
+    final newClient = TRClient(
       host: host,
       port: port,
       username: username,
@@ -212,8 +212,7 @@ class BasicConnectionRepository implements ConnectionRepository {
           break;
         case 'zset':
           // Get list with scores
-          value =
-          await _client!.zRange(key, 0, -1, withScores: true);
+          value = await _client!.zRange(key, 0, -1, withScores: true);
           break;
         case 'ReJSON-RL':
           value = await _client!.jsonGet(key: key);
@@ -358,8 +357,8 @@ class BasicConnectionRepository implements ConnectionRepository {
         final entry = value.entries.first; // value as Map
 
         // final raw = entry.value;
-        // final score = raw is num ? raw.toDouble() : 
-        // double.tryParse(raw.toString()) ?? 
+        // final score = raw is num ? raw.toDouble() :
+        // double.tryParse(raw.toString()) ??
         //   (throw Exception('Invalid score'));
 
         await _client!.zAdd(key, {entry.key.toString(): entry.value as num});

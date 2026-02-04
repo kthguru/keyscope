@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart' show BuildContext, SizedBox, StatelessWidget, Widget;
+import 'package:flutter/material.dart'
+    show BuildContext, SizedBox, StatelessWidget, Widget;
 
 class TextViewer extends StatelessWidget {
   final String text;
-  
+
   TextViewer({required this.text});
 
   @override

@@ -18,10 +18,10 @@
 /// No Flutter dependencies allowed here.
 library;
 
-import 'package:valkey_client/valkey_client.dart';
+import 'package:typeredis/typeredis.dart';
 
 class KeyscopeClient {
-  ValkeyClient? _client;
+  TRClient? _client;
 
   bool get isConnected => _client != null;
 
@@ -32,7 +32,7 @@ class KeyscopeClient {
     String? password,
   }) async {
     // Pure Dart logic using valkey_client
-    final newClient = ValkeyClient(
+    final newClient = TRClient(
       host: host,
       port: port,
       username: username,

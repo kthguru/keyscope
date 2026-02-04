@@ -3,15 +3,18 @@
   <img src="https://download.keyscope.dev/logo.png" alt="Keyscope Devs" width="128" height="128">
   <br>
  
-  <h1>Keyscope ⚡</h1>
+  <h1>Keyscope</h1>
   <p>
-    The high-performance GUI client designed for <b>Redis</b> and <b>Valkey</b>.<br>
+    A high-performance GUI client designed for <b>Redis</b> and <b>Valkey</b>.<br>
     It supports Cluster, Sentinel, SSH tunneling, and handles millions of keys smoothly.<br>
   </p>
 
-  [![pub package](https://img.shields.io/pub/v/keyscope.svg)](https://pub.dev/packages/keyscope)
+  [![pub package](https://img.shields.io/pub/v/keyscope.svg?label=Latest)](https://pub.dev/packages/keyscope)
   [![GUI](https://github.com/infradise/keyscope/actions/workflows/build-gui.yaml/badge.svg)](https://github.com/infradise/keyscope/actions/workflows/build-gui.yaml)
   [![CLI](https://github.com/infradise/keyscope/actions/workflows/build-cli.yaml/badge.svg)](https://github.com/infradise/keyscope/actions/workflows/build-cli.yaml)
+  [![pub package](https://img.shields.io/pub/v/valkey_client.svg?label=TypeRedis&color=blue)](https://pub.dev/packages/TypeRedis)
+  [![pub package](https://img.shields.io/pub/v/dense_table.svg?label=DenseTable&color=blue)](https://pub.dev/packages/dense_table)
+
   <!-- ![Build Status](https://img.shields.io/github/actions/workflow/status/infradise/keyscope/build.yml?branch=main) -->
 
   <p>
@@ -25,11 +28,11 @@
 
 ## ✨ Why Keyscope?
 
-While existing tools are heavy (Electron-based) or lack support for modern Valkey features, Keyscope runs natively on **Flutter**, powered by the high-performance [valkey_client](https://pub.dev/packages/valkey_client) and [dense_table](https://pub.dev/packages/dense_table). Keyscope supports both Redis and Valkey.
+While existing tools are heavy (Electron-based) or lack support for modern Valkey features, Keyscope runs natively on **Flutter**, powered by the high-performance [TypeRedis](https://pub.dev/packages/TypeRedis) and [DenseTable](https://pub.dev/packages/dense_table). Keyscope supports both Redis and Valkey.
 
 ## 🚀 Key Features
 
-* **High Performance:** Render 100k+ keys smoothly using `dense_table` virtualization.
+* **High Performance:** Render 100k+ keys smoothly using `DenseTable` virtualization.
 * **Cluster Ready:** First-class support for Redis/Valkey Cluster & Sentinel.
 * **Secure:** Built-in SSH Tunneling and TLS (SSL) support.
 * **Multi-Platform:** Runs natively on macOS, Windows, and Linux.
@@ -37,10 +40,10 @@ While existing tools are heavy (Electron-based) or lack support for modern Valke
 
 ## 🛠 Powered By
 
-Built with ❤️ using [valkey_client](https://pub.dev/packages/valkey_client) and [dense_table](https://pub.dev/packages/dense_table).
+Built with ❤️ using [TypeRedis](https://pub.dev/packages/TypeRedis) and [DenseTable](https://pub.dev/packages/dense_table).
 
-* **[valkey_client](https://pub.dev/packages/valkey_client):** The engine behind the connectivity.
-* **[dense_table](https://pub.dev/packages/dense_table):** The engine behind the UI performance.
+* **[TypeRedis](https://pub.dev/packages/TypeRedis):** The engine behind the connectivity.
+* **[DenseTable](https://pub.dev/packages/dense_table):** The engine behind the UI performance.
 
 ## 📦 Installation
 

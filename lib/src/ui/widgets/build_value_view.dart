@@ -28,15 +28,8 @@ Widget buildValueView(List<int> rawData) {
   final type = ContentAnalyzer.analyze(rawData);
 
   return switch (type) {
-      ContentType.binary => HexViewer(data: rawData),
-      ContentType.json => 
-          JsonViewer(jsonString: utf8.decode(rawData)),
-      ContentType.text || _ => 
-          TextViewer(text: utf8.decode(rawData)),
+    ContentType.binary => HexViewer(data: rawData),
+    ContentType.json => JsonViewer(jsonString: utf8.decode(rawData)),
+    ContentType.text || _ => TextViewer(text: utf8.decode(rawData)),
   };
 }
-
-
-
-
-

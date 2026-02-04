@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart' show BuildContext, SizedBox, StatelessWidget, Widget;
+import 'package:flutter/material.dart'
+    show BuildContext, SizedBox, StatelessWidget, Widget;
 
 class HexViewer extends StatelessWidget {
   final List<int> data;
-  
+
   HexViewer({required this.data});
 
   @override
