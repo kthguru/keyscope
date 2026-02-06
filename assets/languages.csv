@@ -6,3 +6,22 @@ welcome,Welcome %name$s!,"%name$s님, 환영합니다!",ようこそ、%name$s�
 language,Language,언어,言語,语言,語言,Bahasa,Ngôn ngữ,ภาษา,Sprache,Sprach,Langue,Lingua,Idioma,Язык,Idioma,Idioma
 chooseYourLanguage,Choose your language,언어를 선택하세요,言語を選択してください,选择你的语言,選擇您的語言,Pilih bahasamu,Chọn ngôn ngữ của bạn,เลือกภาษาของคุณ,Wähle deine Sprache,Wähl dini Sprach,Choisissez votre langue,Scegli la tua lingua,Elige tu idioma,Выберите язык,Escolhe o teu idioma,Escolha seu idioma
 home,Home,홈,ホーム,主页,首頁,Beranda,Trang chủ,หน้าหลัก,Startseite,Startsite,Accueil,Home,Inicio,Главная,Início,Início
+empty,Empty,비어있음
+field,Field,필드
+value,Value,값
+actions,Actions,작업
+enterStringValue,Enter string value...,문자열 값 입력
+deleteKey,Delete Key,키 삭제
+addMember,Add Member,멤버 추가,
+addItem,Add Item,항목 추가
+addField,Add Field,필드 추가
+cancel,Cancel,취소
+saveChanges,Save Changes,변경사항 저장
+editValue,Edit Value,값 편집
+forever,Forever,만료없음
+selectKeyToViewDetails,Select a key to view details,상세보기할 키 선택
+changeLanguage,Change Language,언어 변경,言語を変更,更改语言,變更語言,Ganti Bahasa,Đổi ngôn ngữ,เปลี่ยนภาษา,Sprache ändern,Sprach ändere,Changer de langue,Cambia lingua,Cambiar idioma,Изменить язык,Alterar idioma,Alterar idioma
+searchLanguages,Search languages...,언어 검색...,言語を検索...,搜索语言...,搜尋語言...,Cari bahasa...,Tìm kiếm ngôn ngữ...,ค้นหาภาษา...,Sprachen suchen...,Sprach sueche...,Rechercher des langues...,Cerca lingue...,Buscar idiomas...,Поиск языков...,Procurar idiomas...,Pesquisar idiomas...
+currentlyUsedLanguage,Current Language,현재 사용 중인 언어,現在の言語,当前语言,目前使用的語言,Bahasa Saat Ini,Ngôn ngữ hiện tại,ภาษาปัจจุบัน,Aktuelle Sprache,Aktuelli Sprach,Langue actuelle,Lingua corrente,Idioma actual,Текущий язык,Idioma atual,Idioma atual
+recentlyUsedLanguages,Recently Used,최근 사용한 언어,最近使用した言語,最近使用,最近使用,Baru Saja Digunakan,Được sử dụng gần đây,ใช้ล่าสุด,Kürzlich verwendet,Vor churzem bruucht,Récemment utilisé,Usato di recente,Usado recientemente,Недавно использованные,Recentemente usado,Usado recentemente
+allLanguages,All Languages,모든 언어,すべての言語,所有语言,所有語言,Semua Bahasa,Tất cả ngôn ngữ,ทุกภาษา,Alle Sprachen,Alli Sprachä,Toutes les langues,Tutte le lingue,Todos los idiomas,Все языки,Todos os idiomas,Todos os idiomas
