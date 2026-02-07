@@ -1,7 +1,10 @@
 # Changelog
 
 ## 0.6.0
-
+* **Connection Dialog & Test Connection**
+    * **Enhanced** Implemented full `TextEditingController` support for all form fields (name, host, port, username, password).
+      * Dialog now correctly captures and applies user-entered values.
+      * Test Connection action uses the latest input values to validate connectivity.
 * **New Feature:** Advanced Data Editing (Complex Types)
     * **Hash Editing:** Added support for adding, editing, and deleting individual fields within a Hash.
     * **List Editing:** Support for appending items (`RPUSH`), updating items by index (`LSET`), and removing items (`LREM`).
@@ -12,6 +15,8 @@
     * **Enhanced Dialogs:** Dedicated input dialogs for each data type ensure correct data entry (e.g., Score input validation for ZSet).
 * **CLI:**
     * **New Commands**: (`scan`) as a generic command for Redis and Valkey
+* **Core Engine**
+    * **TypeRedis**: Bump version to `3.8.0`.
 
 ## 0.5.0
 
