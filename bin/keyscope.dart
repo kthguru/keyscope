@@ -19,9 +19,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:args/args.dart';
 // import 'package:keyscope/src/core/keyscope_client.dart'; // TODO: REMOVE.
-import 'package:typeredis/typeredis.dart';
+import 'package:keyscope_client/keyscope_client.dart';
 
-TRLogger logger = TRLogger('Keyscope CLI');
+KeyscopeLogger logger = KeyscopeLogger('Keyscope CLI');
 
 void main(List<String> arguments) async {
   final setCommand = ArgParser()
@@ -31,6 +31,7 @@ void main(List<String> arguments) async {
   final getCommand = ArgParser()
     ..addOption('key', abbr: 'k', mandatory: true, help: '<key>');
 
+  // help: '--value \'{"name": "Alice", "age": 30}\'');
   const exampleUsage = "\"{'name': 'Alice', 'age': 30}\"";
   final jsonSetCommand = ArgParser()
     ..addOption('key', abbr: 'k', mandatory: true, help: '<key>')
@@ -73,7 +74,7 @@ void main(List<String> arguments) async {
     // --port
     ..addOption('port', abbr: 'p', defaultsTo: '6379', help: 'Target port')
     // --username
-    ..addOption('username', abbr: 'u', help: 'Username')
+    ..addOption('username', abbr: 'u', defaultsTo: 'default', help: 'Username')
     // --password
     ..addOption('password', abbr: 'a', help: 'Password')
     // --db
@@ -106,14 +107,14 @@ void main(List<String> arguments) async {
   try {
     final results = parser.parse(arguments);
 
-    logger.setEnableTRLog(!(results['silent'] as bool));
+    logger.setEnableKeyscopeLog(!(results['silent'] as bool));
 
     if (results['help'] as bool) {
       showUsages(parser);
       exit(0);
     }
 
-    TRClient? trClient;
+    KeyscopeClient? engine;
 
     try {
       final host = results['host'] as String;
@@ -141,11 +142,13 @@ void main(List<String> arguments) async {
       // mTLS
       // final tlsAuthClients = results['tls-auth-clients'] as bool? ?? false;
 
+      // final match = results['match'] as String;
+
       // Instantiate the repository directly (No Riverpod needed for CLI)
       // -- final repo = BasicConnectionRepository();
       // -- await repo.connect(host: host, port: port, password: password);
 
-      final settings = TRConnectionSettings(
+      final settings = KeyscopeConnectionSettings(
         host: host,
         port: port,
         // tlsPort: tlsPort,
@@ -156,43 +159,51 @@ void main(List<String> arguments) async {
         database: db,
       );
 
-      trClient = TRClient.fromSettings(settings);
+      engine = KeyscopeClient.fromSettings(settings);
+
+      // final client = KeyscopeClient(
+      //   host: host,
+      //   port: port,
+      //   useSsl: true,
+      //   onBadCertificate: (cert) => true,
+      //   commandTimeout: const Duration(seconds: 2),
+      // );
 
       // Connect
-      await connect(trClient);
+      await connect(engine);
 
       // Handle Commands
       switch (results.command?.name) {
         case 'ping':
-          final response = await ping(trClient);
+          final response = await ping(engine);
           print(response);
-          await close(trClient);
+          await close(engine);
           break;
         case 'set':
           final key = results.command?['key'] as String;
           final value = results.command?['value'] as String;
-          await set(trClient, key, value);
+          await set(engine, key, value);
           break;
         case 'get':
           final key = results.command?['key'] as String;
-          await get(trClient, key);
+          await get(engine, key);
           break;
         case 'json-set':
           final key = results.command?['key'] as String;
           final path = results.command?['path'] as String;
           final data = results.command?['data'] as dynamic;
-          await jsonSet(trClient, key: key, path: path, data: data);
+          await jsonSet(engine, key: key, path: path, data: data);
           break;
         case 'json-get':
           final key = results.command?['key'] as String;
           final path = results.command?['path'] as String;
-          await jsonGet(trClient, key: key, path: path);
+          await jsonGet(engine, key: key, path: path);
           break;
         case 'scan':
           final match = results.command?['match'] as String? ?? '*';
           final count = results.command?['count'] as int? ?? 20;
           final type = results.command?['type'] as String? ?? '';
-          await scan(trClient, match, count, type);
+          await scan(engine, match, count, type);
           break;
         default:
           // Handle Options
@@ -208,7 +219,7 @@ void main(List<String> arguments) async {
             if (values.length >= 2) {
               final key = values[0];
               final value = values[1];
-              await set(trClient, key, value);
+              await set(engine, key, value);
             } else {
               logger.info(parser.usage);
             }
@@ -216,7 +227,7 @@ void main(List<String> arguments) async {
             final values = results['get'] as List<String>;
             if (values.isNotEmpty) {
               final key = values[0];
-              await get(trClient, key);
+              await get(engine, key);
             } else {
               logger.info(parser.usage);
             }
@@ -224,7 +235,7 @@ void main(List<String> arguments) async {
             final match = results['match'] as String? ?? '*';
             final count = results['count'] as int? ?? 20;
             final type = results['type'] as String? ?? '';
-            await scan(trClient, match, count, type);
+            await scan(engine, match, count, type);
           } else {
             showUsages(parser);
           }
@@ -238,8 +249,8 @@ void main(List<String> arguments) async {
       exit(1);
     } finally {
       // Cleanup
-      if (trClient != null) {
-        await close(trClient);
+      if (engine != null) {
+        await close(engine);
       }
     }
   } catch (e) {
@@ -248,7 +259,7 @@ void main(List<String> arguments) async {
   }
 }
 
-Future<String> ping(TRClient client) async {
+Future<String> ping(KeyscopeClient client) async {
   logger.info('🏓 PING');
   try {
     final response = await client.ping();
@@ -262,7 +273,7 @@ Future<String> ping(TRClient client) async {
   }
 }
 
-Future<void> connect(TRClient client) async {
+Future<void> connect(KeyscopeClient client) async {
   final config = client.currentConnectionConfig;
   logger.info('Target host: ${config?.host}');
   logger.info('Target port: ${config?.port}');
@@ -271,7 +282,7 @@ Future<void> connect(TRClient client) async {
   await client.connect();
 }
 
-// Future<void> showCurrentConnectedHostAndPort(TRClient client) async {
+// Future<void> showCurrentConnectedHostAndPort(KeyscopeClient client) async {
 //   final config = client.currentConnectionConfig;
 //   logger.info(client.isConnected);
 //   if (client.isConnected && config != null) {
@@ -282,29 +293,29 @@ Future<void> connect(TRClient client) async {
 //   }
 // }
 
-Future<void> close(TRClient client) async {
+Future<void> close(KeyscopeClient client) async {
   await client.close();
 }
 
-Future<String?> get(TRClient client, String key) async {
+Future<String?> get(KeyscopeClient client, String key) async {
   final value = await client.get(key); // unawaited(client.get(key));
   logger.info('GET: key: $key, value: $value');
   return value;
 }
 
-Future<void> set(TRClient client, String key, String value) async {
+Future<void> set(KeyscopeClient client, String key, String value) async {
   logger.info('SET: key: $key, value: $value');
   await client.set(key, value); // unawaited(client.set(key, value));
 }
 
-Future<dynamic> jsonGet(TRClient client,
+Future<dynamic> jsonGet(KeyscopeClient client,
     {required String key, String path = r'$.name'}) async {
   final value = await client.jsonGet(key: key, path: path);
   logger.info('GET: key: $key, path: $path, value: $value');
   return value;
 }
 
-Future<void> jsonSet(TRClient client,
+Future<void> jsonSet(KeyscopeClient client,
     {required String key, required dynamic data, String path = r'$'}) async {
   logger.info('SET: key: $key, path: $path, data: $data');
   await client.jsonSet(key: key, path: path, data: jsonDecode(data));
@@ -312,7 +323,7 @@ Future<void> jsonSet(TRClient client,
 
 // ⚠️ When no command specified:
 void showUsages(ArgParser parser) {
-  // TODO: change print to valkey_client logger with prefix OFF
+  // TODO: change print to keyscope_client logger with prefix OFF
   print('Keyscope CLI - Diagnostic and CI Tool\n');
   print('Usage: keyscope <command> [options]\n');
   print('Commands:');
@@ -325,11 +336,11 @@ void showUsages(ArgParser parser) {
 }
 
 Future<void> scan(
-    TRClient client, String? match, int? count, String? type) async {
+    KeyscopeClient client, String? match, int? count, String? type) async {
   logger.info('🔍 Scanning keys (MATCH: "$match", COUNT: 20)...');
 
-  final result =
-      await client.scan(cursor: '0', match: match ?? '*', count: count ?? 20);
+  final result = await client.scanCli(
+      cursor: '0', match: match ?? '*', count: count ?? 20);
 
   // logger.info('----------------------------------------');
   // logger.info('Next Cursor : ${result.cursor}');
