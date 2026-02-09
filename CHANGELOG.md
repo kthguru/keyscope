@@ -17,7 +17,7 @@
 * **CLI:**
     * **New Commands**: (`scan`) as a generic command for Redis and Valkey
 * **Core Engine**
-    * **TypeRedis**: Bump version to `3.8.1`.
+    * **keyscope_client**: Bump version to `4.0.0`.
 
 ## 0.5.0
 
