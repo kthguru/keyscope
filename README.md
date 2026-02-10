@@ -12,7 +12,7 @@
   [![pub package](https://img.shields.io/pub/v/keyscope.svg?label=Latest)](https://pub.dev/packages/keyscope)
   [![GUI](https://github.com/infradise/keyscope/actions/workflows/build-gui.yaml/badge.svg)](https://github.com/infradise/keyscope/actions/workflows/build-gui.yaml)
   [![CLI](https://github.com/infradise/keyscope/actions/workflows/build-cli.yaml/badge.svg)](https://github.com/infradise/keyscope/actions/workflows/build-cli.yaml)
-  [![pub package](https://img.shields.io/pub/v/keyscope_client.svg?label=keyscope_client&color=blue)](https://pub.dev/packages/keyscope_client)
+  [![pub package](https://img.shields.io/pub/v/keyscope_client.svg?label=keyscope_client)](https://pub.dev/packages/keyscope_client)
   [![pub package](https://img.shields.io/pub/v/dense_table.svg?label=dense_table&color=blue)](https://pub.dev/packages/dense_table)
 
   <!-- ![Build Status](https://img.shields.io/github/actions/workflow/status/infradise/keyscope/build.yml?branch=main) -->
@@ -49,3 +49,15 @@ Built with ❤️ using [keyscope_client](https://pub.dev/packages/keyscope_clie
 ## 📦 Installation
 
 Check the [Releases](https://github.com/infradise/keyscope/releases) page for the latest installer (`.dmg`, `.exe`, `.rpm`, `.deb`).
+
+## 🔨 Build
+
+To build **Keyscope**, you need to generate the `i18n.dart` file first.
+
+Run the setup script:
+
+```sh
+dart run setup.dart
+```
+
+This command will create `lib/i18n.dart`, which is required for a successful build.
