@@ -35,11 +35,12 @@ void main(List<String> arguments) async {
   const exampleUsage = "\"{'name': 'Alice', 'age': 30}\"";
   final jsonSetCommand = ArgParser()
     ..addOption('key', abbr: 'k', mandatory: true, help: '<key>')
-    ..addOption('path', abbr: 'p', defaultsTo: r'$', help: '<path>')
+    ..addOption('path',
+        abbr: 'p',
+        // defaultsTo: r'$',
+        help: '<path>')
     ..addOption('data',
-        abbr: 'v',
-        mandatory: true,
-        help: '<json-array> \ne.g., $exampleUsage');
+        abbr: 'v', mandatory: true, help: '<json-array> \ne.g., $exampleUsage');
 
   final jsonGetCommand = ArgParser()
     ..addOption('key', abbr: 'k', mandatory: true, help: '--key my_json_key')
@@ -318,7 +319,11 @@ Future<dynamic> jsonGet(KeyscopeClient client,
 Future<void> jsonSet(KeyscopeClient client,
     {required String key, required dynamic data, String path = r'$'}) async {
   logger.info('SET: key: $key, path: $path, data: $data');
-  await client.jsonSet(key: key, path: path, data: jsonDecode(data));
+  await client.jsonSet(
+      key: key,
+      path: path,
+      data: // jsonDecode(data as String)
+          data);
 }
 
 // ⚠️ When no command specified:
