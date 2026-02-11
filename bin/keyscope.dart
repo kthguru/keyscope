@@ -15,7 +15,7 @@
  */
 
 import 'dart:async';
-import 'dart:convert';
+// import 'dart:convert';
 import 'dart:io';
 import 'package:args/args.dart';
 // import 'package:keyscope/src/core/keyscope_client.dart'; // TODO: REMOVE.
@@ -170,6 +170,11 @@ void main(List<String> arguments) async {
       //   commandTimeout: const Duration(seconds: 2),
       // );
 
+      if (results.command == null) {
+        showUsages(parser);
+        return;
+      }
+
       // Connect
       await connect(engine);
 
@@ -192,12 +197,14 @@ void main(List<String> arguments) async {
         case 'json-set':
           final key = results.command?['key'] as String;
           final path = results.command?['path'] as String;
+          // const path = r'$'; // for test only
           final data = results.command?['data'] as dynamic;
           await jsonSet(engine, key: key, path: path, data: data);
           break;
         case 'json-get':
           final key = results.command?['key'] as String;
           final path = results.command?['path'] as String;
+          // const path = r'$'; // for test only
           await jsonGet(engine, key: key, path: path);
           break;
         case 'scan':
@@ -324,6 +331,15 @@ Future<void> jsonSet(KeyscopeClient client,
       path: path,
       data: // jsonDecode(data as String)
           data);
+
+  // For test only
+  // await client.jsonSet(
+  //   key: 'fruits',
+  //   path: r'$',
+  //   data: ['apple', 'banana'],
+  // );
+  // dart run bin/keyscope.dart json-set
+  // --key mykey5 --data '{'name': 'Alice', 'age': 20}'
 }
 
 // ⚠️ When no command specified:
