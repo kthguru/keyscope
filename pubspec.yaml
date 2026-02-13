@@ -12,10 +12,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
+
+# Keyscope:
+# - A high-performance GUI for Redis, Valkey, and Dragonfly. 
+# - Provides support for Cluster, Sentinel, SSH/TLS, and handling millions of keys. 
+# - Built on top of keyscope_client, a Dart library for Redis, Valkey, Dragonfly.
+
 name: keyscope
-description: A high-performance GUI for Redis, Valkey, and Dragonfly. Supports Cluster, Sentinel, SSH, and millions of keys. Built with TypeRedis & DenseTable.
-version: 0.6.0
+description: Redis, Valkey, and Dragonfly GUI with multi-language support. Supports Cluster, Sentinel, SSH/TLS. Powered by keyscope_client, the high-performance Dart SDK.
+version: 0.8.0
 homepage: https://github.com/infradise/keyscope
 repository: https://github.com/infradise/keyscope
 issue_tracker: https://github.com/infradise/keyscope/issues
