@@ -13,7 +13,6 @@
   [![GUI](https://github.com/infradise/keyscope/actions/workflows/build-gui.yaml/badge.svg)](https://github.com/infradise/keyscope/actions/workflows/build-gui.yaml)
   [![CLI](https://github.com/infradise/keyscope/actions/workflows/build-cli.yaml/badge.svg)](https://github.com/infradise/keyscope/actions/workflows/build-cli.yaml)
   [![pub package](https://img.shields.io/pub/v/keyscope_client.svg?label=keyscope_client)](https://pub.dev/packages/keyscope_client)
-  [![pub package](https://img.shields.io/pub/v/dense_table.svg?label=dense_table&color=blue)](https://pub.dev/packages/dense_table)
 
   <!-- ![Build Status](https://img.shields.io/github/actions/workflow/status/infradise/keyscope/build.yml?branch=main) -->
 
@@ -21,6 +20,7 @@
     <a href="#-why-keyscope">Why Keyscope?</a> •
     <a href="#-key-features">Key Features</a> •
     <a href="#-powered-by">Powered By</a> •
+    <a href="#-translations">Translations</a> •
     <a href="#-build">Build</a> •
     <a href="#-installation">Installation</a>
   </p>
@@ -29,7 +29,7 @@
 
 ## ✨ Why Keyscope?
 
-While existing tools are heavy (Electron-based) or lack support for modern Valkey features, Keyscope runs natively on [Dart](https://dart.dev/) and [Flutter](https://flutter.dev/), powered by the high-performance [keyscope_client](https://pub.dev/packages/keyscope_client) and [dense_table](https://pub.dev/packages/dense_table). Keyscope supports **[Redis](https://redis.io), [Valkey](https://valkey.io), and [Dragonfly](https://www.dragonflydb.io/)**, with built‑in **Multilingual (i18n) support** for global users.
+While existing tools are heavy (Electron-based) or lack support for modern Valkey features, Keyscope runs natively on [Dart](https://dart.dev/) and [Flutter](https://flutter.dev/), powered by the high-performance [keyscope_client](https://pub.dev/packages/keyscope_client) and dense_table. Keyscope supports [Redis](https://redis.io), [Valkey](https://valkey.io), and [Dragonfly](https://www.dragonflydb.io/), with built‑in **Multilingual (i18n) support** for global users.
 
 ## 🚀 Key Features
 
@@ -45,9 +45,12 @@ While existing tools are heavy (Electron-based) or lack support for modern Valke
 Built with ❤️ using [keyscope_client](https://pub.dev/packages/keyscope_client) and [dense_table](https://pub.dev/packages/dense_table).
 
 * **[keyscope_client](https://pub.dev/packages/keyscope_client):** The engine behind the connectivity.
-* **[dense_table](https://pub.dev/packages/dense_table):** The engine behind the UI performance.
+* **dense_table:** The engine behind the UI performance.
+  > Merged dense_table into Keyscope UI. Functionality now included directly in Keyscope.
 
-## 🌐 Internationalization (i18n)
+## 🌐 Translations
+
+### Internationalization (i18n)
 
 Keyscope provides multilingual support through the `assets/i18n.csv` file.  
 
