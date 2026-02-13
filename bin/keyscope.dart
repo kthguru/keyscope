@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+// A high-performance GUI for Redis, Valkey, and Dragonfly.
+// Provides support for Cluster, Sentinel, SSH, and handling millions of keys.
+// Built on top of keyscope_client, a Dart library for Redis, Valkey, Dragonfly.
+
 import 'dart:async';
 // import 'dart:convert';
 import 'dart:io';
@@ -35,12 +39,18 @@ void main(List<String> arguments) async {
   const exampleUsage = "\"{'name': 'Alice', 'age': 30}\"";
   final jsonSetCommand = ArgParser()
     ..addOption('key', abbr: 'k', mandatory: true, help: '<key>')
-    ..addOption('path',
-        abbr: 'p',
-        // defaultsTo: r'$',
-        help: '<path>')
-    ..addOption('data',
-        abbr: 'v', mandatory: true, help: '<json-array> \ne.g., $exampleUsage');
+    ..addOption(
+      'path',
+      abbr: 'p',
+      // defaultsTo: r'$',
+      help: '<path>',
+    )
+    ..addOption(
+      'data',
+      abbr: 'v',
+      mandatory: true,
+      help: '<json-array> \ne.g., $exampleUsage',
+    );
 
   final jsonGetCommand = ArgParser()
     ..addOption('key', abbr: 'k', mandatory: true, help: '--key my_json_key')
@@ -66,7 +76,6 @@ void main(List<String> arguments) async {
     ..addCommand('json-get', jsonGetCommand)
     ..addCommand('scan', scanCommand)
     ..addCommand('ping', pingCommand)
-
     // ========================================================================
     //  Options
     // ========================================================================
@@ -91,10 +100,17 @@ void main(List<String> arguments) async {
     // --slient
     ..addFlag('silent', help: '(Silent mode) Hide all logs', negatable: false)
     // --scan
-    ..addFlag('scan',
-        help: 'Scan keys (Cursor-based iteration)', negatable: false)
-    ..addOption('match',
-        abbr: 'm', defaultsTo: '*', help: 'Key pattern to match (for --scan)')
+    ..addFlag(
+      'scan',
+      help: 'Scan keys (Cursor-based iteration)',
+      negatable: false,
+    )
+    ..addOption(
+      'match',
+      abbr: 'm',
+      defaultsTo: '*',
+      help: 'Key pattern to match (for --scan)',
+    )
     ..addOption('count', abbr: 'c', help: 'count (for --scan)')
     ..addOption('type', abbr: 't', help: 'type (for --scan)')
     // --set
@@ -102,8 +118,12 @@ void main(List<String> arguments) async {
     // --get
     ..addMultiOption('get', help: '--get <key>')
     // --help
-    ..addFlag('help',
-        abbr: '?', help: 'Show usage information', negatable: false);
+    ..addFlag(
+      'help',
+      abbr: '?',
+      help: 'Show usage information',
+      negatable: false,
+    );
 
   try {
     final results = parser.parse(arguments);
@@ -219,8 +239,9 @@ void main(List<String> arguments) async {
           // if (results['ping'] as bool) {}
           //
           if (results.wasParsed('set')) {
-            final optionValues =
-                List<String>.from(results['set'] as List<String>);
+            final optionValues = List<String>.from(
+              results['set'] as List<String>,
+            );
             final rest = results.rest;
             final values = [...optionValues, ...rest];
 
@@ -271,8 +292,10 @@ Future<String> ping(KeyscopeClient client) async {
   logger.info('🏓 PING');
   try {
     final response = await client.ping();
-    logger.info('RESPONSE: '
-        '${response.toString() == 'PONG' ? 'PONG' : 'NOT PONG ($response)'}');
+    logger.info(
+      'RESPONSE: '
+      '${response.toString() == 'PONG' ? 'PONG' : 'NOT PONG ($response)'}',
+    );
     // logger.info('✅ Connection Status: OK');
     return response;
   } catch (e) {
@@ -316,21 +339,29 @@ Future<void> set(KeyscopeClient client, String key, String value) async {
   await client.set(key, value); // unawaited(client.set(key, value));
 }
 
-Future<dynamic> jsonGet(KeyscopeClient client,
-    {required String key, String path = r'$.name'}) async {
+Future<dynamic> jsonGet(
+  KeyscopeClient client, {
+  required String key,
+  String path = r'$.name',
+}) async {
   final value = await client.jsonGet(key: key, path: path);
   logger.info('GET: key: $key, path: $path, value: $value');
   return value;
 }
 
-Future<void> jsonSet(KeyscopeClient client,
-    {required String key, required dynamic data, String path = r'$'}) async {
+Future<void> jsonSet(
+  KeyscopeClient client, {
+  required String key,
+  required dynamic data,
+  String path = r'$',
+}) async {
   logger.info('SET: key: $key, path: $path, data: $data');
   await client.jsonSet(
-      key: key,
-      path: path,
-      data: // jsonDecode(data as String)
-          data);
+    key: key,
+    path: path,
+    data: // jsonDecode(data as String)
+        data,
+  );
 
   // For test only
   // await client.jsonSet(
@@ -357,18 +388,27 @@ void showUsages(ArgParser parser) {
 }
 
 Future<void> scan(
-    KeyscopeClient client, String? match, int? count, String? type) async {
+  KeyscopeClient client,
+  String? match,
+  int? count,
+  String? type,
+) async {
   logger.info('🔍 Scanning keys (MATCH: "$match", COUNT: 20)...');
 
   final result = await client.scanCli(
-      cursor: '0', match: match ?? '*', count: count ?? 20);
+    cursor: '0',
+    match: match ?? '*',
+    count: count ?? 20,
+  );
 
   // logger.info('----------------------------------------');
   // logger.info('Next Cursor : ${result.cursor}');
   // logger.info('Found Keys  : ${result.keys.length}');
   // logger.info('----------------------------------------');
-  logger.info('Found ${result.keys.length} keys. '
-      'Next cursor: ${result.cursor}');
+  logger.info(
+    'Found ${result.keys.length} keys. '
+    'Next cursor: ${result.cursor}',
+  );
 
   if (result.keys.isEmpty) {
     logger.info('(No keys found)');
@@ -383,7 +423,9 @@ Future<void> scan(
     logger.info('✅ Full iteration completed (Cursor returned to 0).');
   } else {
     logger.info('----------------------------------------');
-    logger.info('👉 More keys available. '
-        'Use cursor "${result.cursor}" to continue.');
+    logger.info(
+      '👉 More keys available. '
+      'Use cursor "${result.cursor}" to continue.',
+    );
   }
 }

@@ -34,10 +34,12 @@ class _AdvancedLanguageSelectorSheetState
 
   @override
   Widget build(BuildContext context) {
-    final currentLanguageCode =
-        ref.watch(languageProvider.select((p) => p.languageCode));
-    final currentLanguage =
-        allLanguages.firstWhere((lang) => lang.code == currentLanguageCode);
+    final currentLanguageCode = ref.watch(
+      languageProvider.select((p) => p.languageCode),
+    );
+    final currentLanguage = allLanguages.firstWhere(
+      (lang) => lang.code == currentLanguageCode,
+    );
 
     final recentLanguages = ref
         .watch(languageProvider)
@@ -67,11 +69,13 @@ class _AdvancedLanguageSelectorSheetState
             TextField(
               onChanged: (value) => setState(() => _searchQuery = value),
               decoration: InputDecoration(
-                  hintText: I18n.of(context).searchLanguages,
-                  prefixIcon: const Icon(Icons.search),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16)),
+                hintText: I18n.of(context).searchLanguages,
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+              ),
             ),
             const SizedBox(height: 16),
             Expanded(
@@ -82,17 +86,21 @@ class _AdvancedLanguageSelectorSheetState
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text(I18n.of(context).currentlyUsedLanguage,
-                            style:
-                                const TextStyle(fontWeight: FontWeight.bold)),
+                        child: Text(
+                          I18n.of(context).currentlyUsedLanguage,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                     SliverToBoxAdapter(
                       child: ListTile(
-                        title: Text(currentLanguage.name,
-                            style: const TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold)),
+                        title: Text(
+                          currentLanguage.name,
+                          style: const TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         trailing: const Icon(Icons.check, color: Colors.blue),
                         onTap: () => Navigator.of(context).pop(),
                       ),
@@ -103,9 +111,10 @@ class _AdvancedLanguageSelectorSheetState
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text(I18n.of(context).recentlyUsedLanguages,
-                            style:
-                                const TextStyle(fontWeight: FontWeight.bold)),
+                        child: Text(
+                          I18n.of(context).recentlyUsedLanguages,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                     SliverList.builder(
@@ -129,9 +138,10 @@ class _AdvancedLanguageSelectorSheetState
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text(I18n.of(context).allLanguages,
-                            style:
-                                const TextStyle(fontWeight: FontWeight.bold)),
+                        child: Text(
+                          I18n.of(context).allLanguages,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   SliverList.builder(

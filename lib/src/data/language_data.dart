@@ -19,8 +19,11 @@ class Language {
   final String name;
   final String region;
 
-  const Language(
-      {required this.code, required this.name, required this.region});
+  const Language({
+    required this.code,
+    required this.name,
+    required this.region,
+  });
 }
 
 const List<Language> allLanguages = [

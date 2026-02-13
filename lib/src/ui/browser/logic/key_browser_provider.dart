@@ -24,7 +24,7 @@ class KeyBrowserState {
   final bool isLoading;
   final List<String> keys;
   final String
-      cursor; // '0' means end of iteration if we started from 0 and came back
+  cursor; // '0' means end of iteration if we started from 0 and came back
   final String matchPattern;
   final Object? error;
 
@@ -42,14 +42,13 @@ class KeyBrowserState {
     String? cursor,
     String? matchPattern,
     Object? error,
-  }) =>
-      KeyBrowserState(
-        isLoading: isLoading ?? this.isLoading,
-        keys: keys ?? this.keys,
-        cursor: cursor ?? this.cursor,
-        matchPattern: matchPattern ?? this.matchPattern,
-        error: error, // Clear error if not provided
-      );
+  }) => KeyBrowserState(
+    isLoading: isLoading ?? this.isLoading,
+    keys: keys ?? this.keys,
+    cursor: cursor ?? this.cursor,
+    matchPattern: matchPattern ?? this.matchPattern,
+    error: error, // Clear error if not provided
+  );
 }
 
 /// Controller for SCAN operations
@@ -63,8 +62,11 @@ class KeyBrowserController extends StateNotifier<KeyBrowserState> {
     state = KeyBrowserState(isLoading: true, matchPattern: pattern);
     try {
       // Start from cursor 0
-      final result =
-          await _repository.scanKeys(cursor: '0', match: pattern, count: 50);
+      final result = await _repository.scanKeys(
+        cursor: '0',
+        match: pattern,
+        count: 50,
+      );
       // TODO: add this to user-defined preferences
 
       state = state.copyWith(
@@ -104,6 +106,6 @@ class KeyBrowserController extends StateNotifier<KeyBrowserState> {
 
 final keyBrowserProvider =
     StateNotifierProvider<KeyBrowserController, KeyBrowserState>((ref) {
-  final repo = ref.watch(connectionRepositoryProvider);
-  return KeyBrowserController(repo);
-});
+      final repo = ref.watch(connectionRepositoryProvider);
+      return KeyBrowserController(repo);
+    });

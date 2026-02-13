@@ -30,9 +30,10 @@ class LanguageRepository with ChangeNotifier {
   String get languageCode => _languageCode;
   List<Language> get recentLanguages => _recentLanguages.toList();
 
-  Language get currentLanguage =>
-      allLanguages.firstWhere((lang) => lang.code == _languageCode,
-          orElse: () => allLanguages.first);
+  Language get currentLanguage => allLanguages.firstWhere(
+    (lang) => lang.code == _languageCode,
+    orElse: () => allLanguages.first,
+  );
 
   void changeLanguage(String newCode) {
     if (_languageCode != newCode) {
@@ -50,5 +51,6 @@ class LanguageRepository with ChangeNotifier {
   }
 }
 
-final languageProvider =
-    ChangeNotifierProvider<LanguageRepository>((ref) => LanguageRepository());
+final languageProvider = ChangeNotifierProvider<LanguageRepository>(
+  (ref) => LanguageRepository(),
+);

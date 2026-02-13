@@ -43,8 +43,11 @@ void main() async {
   }
 
   // 4. Process data
+  // Assumes the first row is the header: keys, en, ko, ja, ...
   final headerRow = rows[0].map((e) => e.trim()).toList();
-  // Assume keys, en, ko... (English at index 1)
+
+  // The first column is 'keys', so we slice from index 1
+  // to get locales. (English at index 1)
   final locales = headerRow.sublist(1); // Exclude 'keys' column
 
   // Validate English values and process rows
@@ -61,6 +64,7 @@ void main() async {
   final newContent = buffer.toString();
 
   // 6. Diff Check & Write
+  // Only write to file if content has changed to prevent unnecessary rebuilds.
   final outputFileObj = File(outputFile);
   if (await outputFileObj.exists()) {
     final existingContent = await outputFileObj.readAsString();
@@ -74,7 +78,8 @@ void main() async {
   print('✅ Successfully generated $outputFile (Changes detected)');
 }
 
-/// Parses CSV content character by character to handle quotes and newlines correctly.
+/// Parses CSV content character by character to handle quotes and newlines
+/// correctly.
 /// Returns a List of rows, where each row is a List of Strings.
 List<List<String>> _parseCsv(String text) {
   final rows = <List<String>>[];
@@ -82,6 +87,7 @@ List<List<String>> _parseCsv(String text) {
   final buffer = StringBuffer();
   var inQuote = false;
 
+  // Start from index 1 to skip header
   for (var i = 0; i < text.length; i++) {
     final char = text[i];
 
@@ -143,6 +149,8 @@ List<Map<String, dynamic>> _processRows(
     final key = row[0].trim();
     if (key.isEmpty) continue;
 
+    // The English value is usually at index 1. We use this to detect arguments.
+    //
     // Use English value (index 1) to detect arguments like %name$s
     // Safety check: ensure row has enough columns
     //
@@ -157,16 +165,18 @@ List<Map<String, dynamic>> _processRows(
       exit(1);
     }
 
+    // Store values for each locale
     final values = <String, String>{};
     for (var j = 0; j < locales.length; j++) {
       // +1 for key column offset
+      // +1 because row index 0 is the key
       final val = (j + 1 < row.length) ? row[j + 1] : '';
       values[locales[j]] = val;
     }
 
     result.add({
       'key': key,
-      'args': _extractArgs(englishValue),
+      'args': _extractArgs(englishValue), // e.g., ['name'] for "%name$s"
       'en_value': englishValue, // Store English value separately for fallback
       'values': values,
     });
@@ -174,8 +184,10 @@ List<Map<String, dynamic>> _processRows(
   return result;
 }
 
-/// Extracts arguments from a string (e.g., "%name$s" -> "name").
+/// Extracts arguments from a string format (e.g., "%name$s" -> "name").
+/// Returns a list of argument names (e.g., ['name']).
 List<String> _extractArgs(String text) {
+  // Regex to match pattern %variableName$s
   final regex = RegExp(r'%([a-zA-Z0-9_]+)\$s');
   final matches = regex.allMatches(text);
   if (matches.isEmpty) return [];
@@ -217,18 +229,23 @@ void _writeClass(StringBuffer buffer, List<Map<String, dynamic>> keyDataList) {
   );
   buffer.writeln('class I18n {');
 
+  // --- Getters & Methods ---
   for (var data in keyDataList) {
     final key = data['key'];
     final args = data['args'] as List<String>;
 
     if (args.isEmpty) {
+      // Simple getter for plain text
       buffer.writeln('  String get $key => _getText("$key");');
     } else {
+      // Method for strings with arguments
+      // final args = argsStr.split(',');
       final methodArgs = args.map((a) => 'required String $a').join(', ');
 
       buffer.write('  String $key({$methodArgs}) =>\n');
       buffer.write('      _getText("$key")');
       for (var arg in args) {
+        // Replaces %name$s with the variable value
         buffer.write('.replaceAll(r"%$arg\$s", $arg)');
       }
       buffer.writeln(';');
@@ -246,10 +263,12 @@ void _writeStaticMaps(
   List<String> locales,
   List<Map<String, dynamic>> keyDataList,
 ) {
+  // --- Static Map Definitions ---
   buffer.writeln('  static late Map<String, String> _localizedValues;');
   buffer.writeln();
 
   for (var locale in locales) {
+    // Convert 'zh_CN' to '_zhCNValues'
     final varName = '_${locale.replaceAll('_', '')}Values';
     buffer.writeln('  static const $varName = {');
 
@@ -266,6 +285,8 @@ void _writeStaticMaps(
         val = englishValue;
       }
 
+      // Use raw strings (r"...") if the value contains special characters like $ or \
+      // This prevents unwanted string interpolation in Dart.
       String quotedValue;
       // Use raw string if special characters exist
       // (checking the final 'val', which might be the English fallback)
@@ -287,6 +308,7 @@ void _writeStaticMaps(
     buffer.writeln();
   }
 
+  // --- All Values Map ---
   // Map linking locales to their value maps
   buffer.writeln('  static const _allValues = {');
   for (var locale in locales) {
@@ -338,8 +360,10 @@ void _writeDelegate(StringBuffer buffer, List<String> locales) {
   for (var locale in locales) {
     if (locale.contains('_')) {
       final parts = locale.split('_');
+      // e.g., zh_CN -> Locale('zh', 'CN')
       buffer.writeln("    Locale('${parts[0]}', '${parts[1]}'),");
     } else {
+      // e.g., en -> Locale('en')
       buffer.writeln("    Locale('$locale'),");
     }
   }

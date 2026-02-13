@@ -26,8 +26,6 @@ class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => const MaterialApp(
-          home: Scaffold(
-        body: KeyscopeApp(),
-      ));
+  Widget build(BuildContext context, WidgetRef ref) =>
+      const MaterialApp(home: Scaffold(body: KeyscopeApp()));
 }

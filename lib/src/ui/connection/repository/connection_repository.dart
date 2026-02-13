@@ -57,8 +57,7 @@ abstract class ConnectionRepository {
     required int port,
     String? username,
     String? password,
-  }) async =>
-      {};
+  }) async => {};
   //   print(password);
   //   // UI-specific logging can stay here
   //   print('🔌 [GUI] Connecting to $host:$port...');
@@ -82,12 +81,12 @@ abstract class ConnectionRepository {
   Future<void> deleteKey(String key) async => {};
   Future<void> setStringValue(String key, String value, {int? ttl}) async => {};
 
-  Future<void> createKey(
-          {required String key,
-          required String type,
-          required dynamic value,
-          int? ttl}) async =>
-      {};
+  Future<void> createKey({
+    required String key,
+    required String type,
+    required dynamic value,
+    int? ttl,
+  }) async => {};
 
   /// Scans keys incrementally to avoid blocking the server.
   /// [cursor]: The cursor to start from (use '0' for the start).

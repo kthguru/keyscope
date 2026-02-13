@@ -42,11 +42,11 @@ While existing tools are heavy (Electron-based) or lack support for modern Valke
 
 ## 🛠 Powered By
 
-Built with ❤️ using [keyscope_client](https://pub.dev/packages/keyscope_client) and [dense_table](https://pub.dev/packages/dense_table).
+Built with ❤️ using [keyscope_client](https://pub.dev/packages/keyscope_client) and dense_table.
 
 * **[keyscope_client](https://pub.dev/packages/keyscope_client):** The engine behind the connectivity.
 * **dense_table:** The engine behind the UI performance.
-  > Merged dense_table into Keyscope UI. Functionality now included directly in Keyscope.
+  > Merged into Keyscope UI. Functionality now included directly in Keyscope.
 
 ## 🌐 Translations
 
