@@ -1,3 +1,19 @@
+/*
+ * Copyright 2025-2026 Infradise Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import 'dart:io';
 import 'package:keyscope_client/keyscope_client.dart' show KeyscopeLogger;
 
@@ -10,8 +26,8 @@ void main() {
   logger.info('Running pub get...');
   pubGet();
 
-  logger.info('Running flappy_translator...');
-  flappyTranslator();
+  logger.info('Running i18n_generator...');
+  i18nGenerator();
 
   // // logger.info('Running flutter_native_splash...');
   // flutterNativeSplash();
@@ -55,12 +71,12 @@ void pubGet() {
   logger.info(result.stdout.toString());
 }
 
-void flappyTranslator() {
-  final result = Process.runSync('dart', ['run', 'flappy_translator']);
+void i18nGenerator() {
+  final result = Process.runSync('dart', ['run', 'tool/i18n_generator.dart']);
   if (result.exitCode != 0) {
     logger
       ..setLogLevelError()
-      ..error('flappy_translator FAILED with exit code ${result.exitCode}.')
+      ..error('tool/i18n_generator FAILED with exit code ${result.exitCode}.')
       ..error(result.stderr.toString());
     exit(result.exitCode);
   }
