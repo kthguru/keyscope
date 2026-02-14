@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.8.1
+* **Fix**: Included the missing `lib/i18n.dart` in the package to resolve static analysis errors on pub.dev.
+
 ## 0.8.0
 * **Multilingual:** Added Internationalization (i18n) with full multi-language support.
 * **Core Engine**

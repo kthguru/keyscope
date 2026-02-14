@@ -42,6 +42,10 @@ test/
 # setup.dart
 # tool/i18n_generator.dart
 
+# Ignore generated files for multilingual
+# Need to include for pub.dev static analysis
+# lib/i18n.dart
+
 # Ignore CLI related generated files
 bin/keyscope/
 #\ bin/keyscope/bundle/bin/keyscope
@@ -51,9 +55,6 @@ bin/keyscope_*.dart
 
 # No DevTools configuration
 devtools_options.yaml
-
-# Ignore generated files for multilingual
-lib/i18n.dart
 
 # No docs
 PREFLIGHT.md

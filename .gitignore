@@ -66,5 +66,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Multilingual
-lib/i18n.dart
+# Multilingual (need to allow for pub.dev)
+# lib/i18n.dart
