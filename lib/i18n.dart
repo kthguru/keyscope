@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-  
+
 // GENERATED CODE - DO NOT MODIFY BY HAND
 //
 // ignore_for_file: public_member_api_docs, prefer_single_quotes
@@ -142,7 +142,8 @@ class I18n {
     "valueUpdate1": "Value updated!",
     "error": "Error",
     "deleteKey2": r"Delete \%key$s\?",
-    "areYouSureYouWantToDeleteKey": r"Are you sure you want to delete \%key$s\?",
+    "areYouSureYouWantToDeleteKey":
+        r"Are you sure you want to delete \%key$s\?",
     "openConnectionManager": "Open Connection Manager",
     "selectKeyToViewDetails": "Select a key to view details",
     "changeLanguage": "Change Language",
@@ -226,7 +227,8 @@ class I18n {
     "valueUpdate1": "Value updated!",
     "error": "Error",
     "deleteKey2": r"Delete \%key$s\?",
-    "areYouSureYouWantToDeleteKey": r"Are you sure you want to delete \%key$s\?",
+    "areYouSureYouWantToDeleteKey":
+        r"Are you sure you want to delete \%key$s\?",
     "openConnectionManager": "接続マネージャーを開く",
     "selectKeyToViewDetails": "Select a key to view details",
     "changeLanguage": "言語を変更",
@@ -268,7 +270,8 @@ class I18n {
     "valueUpdate1": "Value updated!",
     "error": "Error",
     "deleteKey2": r"Delete \%key$s\?",
-    "areYouSureYouWantToDeleteKey": r"Are you sure you want to delete \%key$s\?",
+    "areYouSureYouWantToDeleteKey":
+        r"Are you sure you want to delete \%key$s\?",
     "openConnectionManager": "打开连接管理器",
     "selectKeyToViewDetails": "Select a key to view details",
     "changeLanguage": "更改语言",
@@ -310,7 +313,8 @@ class I18n {
     "valueUpdate1": "Value updated!",
     "error": "Error",
     "deleteKey2": r"Delete \%key$s\?",
-    "areYouSureYouWantToDeleteKey": r"Are you sure you want to delete \%key$s\?",
+    "areYouSureYouWantToDeleteKey":
+        r"Are you sure you want to delete \%key$s\?",
     "openConnectionManager": "打開連線管理器",
     "selectKeyToViewDetails": "Select a key to view details",
     "changeLanguage": "變更語言",
@@ -352,7 +356,8 @@ class I18n {
     "valueUpdate1": "Value updated!",
     "error": "Error",
     "deleteKey2": r"Delete \%key$s\?",
-    "areYouSureYouWantToDeleteKey": r"Are you sure you want to delete \%key$s\?",
+    "areYouSureYouWantToDeleteKey":
+        r"Are you sure you want to delete \%key$s\?",
     "openConnectionManager": "Buka Manajer Koneksi",
     "selectKeyToViewDetails": "Select a key to view details",
     "changeLanguage": "Ganti Bahasa",
@@ -394,7 +399,8 @@ class I18n {
     "valueUpdate1": "Value updated!",
     "error": "Error",
     "deleteKey2": r"Delete \%key$s\?",
-    "areYouSureYouWantToDeleteKey": r"Are you sure you want to delete \%key$s\?",
+    "areYouSureYouWantToDeleteKey":
+        r"Are you sure you want to delete \%key$s\?",
     "openConnectionManager": "Mở Trình quản lý Kết nối",
     "selectKeyToViewDetails": "Select a key to view details",
     "changeLanguage": "Đổi ngôn ngữ",
@@ -436,7 +442,8 @@ class I18n {
     "valueUpdate1": "Value updated!",
     "error": "Error",
     "deleteKey2": r"Delete \%key$s\?",
-    "areYouSureYouWantToDeleteKey": r"Are you sure you want to delete \%key$s\?",
+    "areYouSureYouWantToDeleteKey":
+        r"Are you sure you want to delete \%key$s\?",
     "openConnectionManager": "เปิดตัวจัดการการเชื่อมต่อ",
     "selectKeyToViewDetails": "Select a key to view details",
     "changeLanguage": "เปลี่ยนภาษา",
@@ -478,7 +485,8 @@ class I18n {
     "valueUpdate1": "Value updated!",
     "error": "Error",
     "deleteKey2": r"Delete \%key$s\?",
-    "areYouSureYouWantToDeleteKey": r"Are you sure you want to delete \%key$s\?",
+    "areYouSureYouWantToDeleteKey":
+        r"Are you sure you want to delete \%key$s\?",
     "openConnectionManager": "Verbindungs-Manager öffnen",
     "selectKeyToViewDetails": "Select a key to view details",
     "changeLanguage": "Sprache ändern",
@@ -520,7 +528,8 @@ class I18n {
     "valueUpdate1": "Value updated!",
     "error": "Error",
     "deleteKey2": r"Delete \%key$s\?",
-    "areYouSureYouWantToDeleteKey": r"Are you sure you want to delete \%key$s\?",
+    "areYouSureYouWantToDeleteKey":
+        r"Are you sure you want to delete \%key$s\?",
     "openConnectionManager": "Verbindungs-Manager öffnen",
     "selectKeyToViewDetails": "Select a key to view details",
     "changeLanguage": "Sprach ändere",
@@ -562,7 +571,8 @@ class I18n {
     "valueUpdate1": "Value updated!",
     "error": "Error",
     "deleteKey2": r"Delete \%key$s\?",
-    "areYouSureYouWantToDeleteKey": r"Are you sure you want to delete \%key$s\?",
+    "areYouSureYouWantToDeleteKey":
+        r"Are you sure you want to delete \%key$s\?",
     "openConnectionManager": "Ouvrir le Gestionnaire de Connexion",
     "selectKeyToViewDetails": "Select a key to view details",
     "changeLanguage": "Changer de langue",
@@ -604,7 +614,8 @@ class I18n {
     "valueUpdate1": "Value updated!",
     "error": "Error",
     "deleteKey2": r"Delete \%key$s\?",
-    "areYouSureYouWantToDeleteKey": r"Are you sure you want to delete \%key$s\?",
+    "areYouSureYouWantToDeleteKey":
+        r"Are you sure you want to delete \%key$s\?",
     "openConnectionManager": "Apri Gestore Connessioni",
     "selectKeyToViewDetails": "Select a key to view details",
     "changeLanguage": "Cambia lingua",
@@ -646,7 +657,8 @@ class I18n {
     "valueUpdate1": "Value updated!",
     "error": "Error",
     "deleteKey2": r"Delete \%key$s\?",
-    "areYouSureYouWantToDeleteKey": r"Are you sure you want to delete \%key$s\?",
+    "areYouSureYouWantToDeleteKey":
+        r"Are you sure you want to delete \%key$s\?",
     "openConnectionManager": "Abrir Administrador de Conexiones",
     "selectKeyToViewDetails": "Select a key to view details",
     "changeLanguage": "Cambiar idioma",
@@ -688,7 +700,8 @@ class I18n {
     "valueUpdate1": "Value updated!",
     "error": "Error",
     "deleteKey2": r"Delete \%key$s\?",
-    "areYouSureYouWantToDeleteKey": r"Are you sure you want to delete \%key$s\?",
+    "areYouSureYouWantToDeleteKey":
+        r"Are you sure you want to delete \%key$s\?",
     "openConnectionManager": "Открыть диспетчер подключений",
     "selectKeyToViewDetails": "Select a key to view details",
     "changeLanguage": "Изменить язык",
@@ -730,7 +743,8 @@ class I18n {
     "valueUpdate1": "Value updated!",
     "error": "Error",
     "deleteKey2": r"Delete \%key$s\?",
-    "areYouSureYouWantToDeleteKey": r"Are you sure you want to delete \%key$s\?",
+    "areYouSureYouWantToDeleteKey":
+        r"Are you sure you want to delete \%key$s\?",
     "openConnectionManager": "Abrir Gestor de Conexões",
     "selectKeyToViewDetails": "Select a key to view details",
     "changeLanguage": "Alterar idioma",
@@ -772,7 +786,8 @@ class I18n {
     "valueUpdate1": "Value updated!",
     "error": "Error",
     "deleteKey2": r"Delete \%key$s\?",
-    "areYouSureYouWantToDeleteKey": r"Are you sure you want to delete \%key$s\?",
+    "areYouSureYouWantToDeleteKey":
+        r"Are you sure you want to delete \%key$s\?",
     "openConnectionManager": "Abrir Gerenciador de Conexões",
     "selectKeyToViewDetails": "Select a key to view details",
     "changeLanguage": "Alterar idioma",
@@ -854,4 +869,3 @@ class I18nDelegate extends LocalizationsDelegate<I18n> {
   @override
   bool shouldReload(I18nDelegate old) => false;
 }
-
