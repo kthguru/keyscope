@@ -46,12 +46,18 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Install Dependencies
-        run: flutter pub get
-
       # ----------------------------------------------------------------
       # Prerequisites Steps
       # ----------------------------------------------------------------
+      - name: Remove cache (except Linux)
+        if: matrix.platform != 'linux'
+        run: |
+          flutter pub cache clean --force
+          dart pub cache clean --force
+
+      - name: Install Dependencies
+        run: flutter pub get
+
       - name: Setup
         run: dart run setup.dart
 
