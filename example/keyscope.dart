@@ -19,6 +19,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keyscope/keyscope.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -27,5 +29,7 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) =>
-      const MaterialApp(home: Scaffold(body: KeyscopeApp()));
+      // To create a KeyscopeApp-like class, configure Locale and Theme.
+      // For detailed examples, please refer to the KeyscopeApp class.
+      const KeyscopeApp();
 }
