@@ -36,9 +36,11 @@ coverage/
 assets/icons
 assets/images
 test/widget_test.dart
+test/
 
-# No setup
-setup.dart
+# No CI setup (allowed)
+# setup.dart
+# tool/i18n_generator.dart
 
 # Ignore CLI related generated files
 bin/keyscope/
