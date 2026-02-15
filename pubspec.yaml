@@ -19,8 +19,8 @@
 # - Built on top of keyscope_client, a Dart library for Redis, Valkey, Dragonfly.
 
 name: keyscope
-description: Redis, Valkey, and Dragonfly GUI with multi-language support. Supports Cluster, Sentinel, SSH/TLS. Powered by keyscope_client, the high-performance Dart SDK.
-version: 0.8.1
+description: Redis, Valkey, and Dragonfly GUI with built-in multilingual support for global users.
+version: 0.8.2
 homepage: https://github.com/infradise/keyscope
 repository: https://github.com/infradise/keyscope
 issue_tracker: https://github.com/infradise/keyscope/issues

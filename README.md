@@ -5,7 +5,7 @@
  
   <h1>Keyscope</h1>
   <p>
-    Redis, Valkey, and Dragonfly GUI with multi-language support.
+    Redis, Valkey, and Dragonfly GUI with built-in multilingual support for global users.
     <br><br>
   </p>
 

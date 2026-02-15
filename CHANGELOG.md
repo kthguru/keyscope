@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.8.2
+* **Fix (Example)**: Replaced MaterialApp wrapper with KeyscopeApp to ensure locale and theme settings are applied correctly.
+
 ## 0.8.1
 * **Fix**: Included the missing `lib/i18n.dart` in the package to resolve static analysis errors on pub.dev.
 
