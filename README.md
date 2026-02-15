@@ -24,6 +24,7 @@
     <a href="#-powered-by">Powered By</a> •
     <a href="#-translations">Translations</a> •
     <a href="#-build">Build</a> •
+    <a href="#-run">Run</a> •
     <a href="#-installation">Installation</a>
   </p>
 
@@ -33,7 +34,7 @@
 
 ## ✨ Why Keyscope?
 
-While existing tools are heavy (Electron-based) or lack support for modern Valkey features, Keyscope runs natively on [Dart](https://dart.dev/) and [Flutter](https://flutter.dev/), powered by the high-performance [keyscope_client](https://pub.dev/packages/keyscope_client) and dense_table. Keyscope supports [Redis](https://redis.io), [Valkey](https://valkey.io), and [Dragonfly](https://www.dragonflydb.io/), with built‑in **Multilingual (i18n) support** for global users.
+While existing tools are heavy (Electron-based) or lack support for modern Valkey and Dragonfly features, Keyscope runs natively and supports [Redis](https://redis.io), [Valkey](https://valkey.io), and [Dragonfly](https://www.dragonflydb.io/), with built-in multilingual support for global users.
 
 ## 🚀 Key Features
 
@@ -56,11 +57,13 @@ Built with ❤️ using [keyscope_client](https://pub.dev/packages/keyscope_clie
 
 For more details, check out the [Translation Guide](https://github.com/infradise/keyscope/blob/main/docs/TRANSLATIONS.md).
 
-## 🔨 Build
+## 🔨Build
 
 For more details, check out the [Build Instructions](https://github.com/infradise/keyscope/blob/main/docs/BUILD.md).
 
-## ▶️ Run
+<!-- <a id="-run"></a> ▶️ -->
+## ⚡ Run
+
 ```sh
 lib/main.dart
 ```
