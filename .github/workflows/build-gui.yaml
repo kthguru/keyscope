@@ -29,8 +29,8 @@ on:
         type: choice
         # See https://github.com/actions/runner-images
         options:
-          - macos-14-large
-          - macos-14
+          # - macos-14-large # x64
+          - macos-14 # arm64
           - ubuntu-latest # x64
           - windows-latest # x64
           # - fedora-latest
@@ -70,6 +70,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
         arch: [arm64, x64]
+
         include:
           # TODO: universal
           # - os: macos-latest
@@ -78,26 +79,43 @@ jobs:
           - os: macos-14 # arm64
             arch: arm64
             platform: macos
-          - os: macos-14-large # x64
-            arch: x86_64
-            platform: macos
+          # - os: macos-14-large # x64
+          #   arch: x86_64
+          #   platform: macos
           - os: ubuntu-latest # x64
             platform: linux
+            # arch: x64
           - os: windows-latest # x64
             platform: windows
+            # arch: x64
+        # Exclude paid runners.
+
+        exclude:
+          - os: ubuntu-latest
+            arch: arm64
+          - os: windows-latest
+            arch: arm64
         # exclude:
         #   - os: ${{ github.event_name == 'workflow_dispatch' && 'ubuntu-latest' || '' }}
-        #     if: github.event.inputs.os != 'ubuntu-latest' && github.event.inputs.arch == 'arm64'
+        #     if: inputs.os != 'ubuntu-latest' && inputs.arch == 'arm64'
         #   - os: ${{ github.event_name == 'workflow_dispatch' && 'windows-latest' || '' }}
-        #     if: github.event.inputs.os != 'windows-latest' && github.event.inputs.arch == 'arm64'
+        #     if: inputs.os != 'windows-latest' && inputs.arch == 'arm64'
         #   - arch: ${{ github.event_name == 'workflow_dispatch' && 'macos-14' || '' }}
-        #     if: github.event.inputs.arch != 'x64' 
+        #     if: inputs.arch != 'x64' 
         #   - arch: ${{ github.event_name == 'workflow_dispatch' && 'macos-14-large' || '' }}
-        #     if: github.event.inputs.arch != 'arm64' 
+        #     if: inputs.arch != 'arm64' 
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+
+      # - name: Set Platform
+      #   id: set_platform
+      #   shell: bash
+      #   run: |
+      #     if [[ "${{ matrix.os }}" == *"ubuntu"* ]]; then echo "platform=linux" >> $GITHUB_OUTPUT; fi
+      #     if [[ "${{ matrix.os }}" == *"windows"* ]]; then echo "platform=windows" >> $GITHUB_OUTPUT; fi
+      #     if [[ "${{ matrix.os }}" == *"macos"* ]]; then echo "platform=macos" >> $GITHUB_OUTPUT; fi
 
       - name: Run Shared Build Logic
         uses: ./.github/actions/build-logic
@@ -105,50 +123,67 @@ jobs:
           os: ${{ matrix.os }}
           arch: ${{ matrix.arch }}
           platform: ${{ matrix.platform }}
+          # platform: ${{ steps.set_platform.outputs.platform || matrix.platform }}
     
   build-manual:
     name: Manual GUI Build (${{ inputs.os }} - ${{ inputs.arch }})
-    # name: GUI Build (${{ github.event.inputs.os || inputs.os }})
     if: github.event_name == 'workflow_dispatch'
-    runs-on: ${{ github.event.inputs.os }}
+    # ${{ github.event.inputs.os }}
+    runs-on: ${{ inputs.os }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+
+      - name: Validate Inputs
+        run: |
+          echo "Checking OS: ${{ inputs.os }} and Arch: ${{ inputs.arch }}"
+          
+          # Exclude paid runners (Ubuntu arm64 and Windows arm64)
+          if [[ "${{ inputs.os }}" =~ (ubuntu|windows) ]] && [[ "${{ inputs.arch }}" == "arm64" ]]; then
+            echo "::error::❌ Error: ${{ inputs.os }} on arm64 is excluded from this workflow."
+            exit 1
+          fi
+
+          # Exclude paid runners (macOS x86_64)
+          if [[ "${{ inputs.os }}" == "macos-14-large" ]]; then
+            echo "::error::❌ Error: 'macos-14-large' on x86_64 is excluded from this workflow."
+            exit 1
+          fi
 
       # Environment
       - name: Set Platform and Arch
         id: set_env
         run: |
-          case "${{ github.event.inputs.os }}" in
+          case "${{ inputs.os }}" in
             macos-latest|macos-14-large|macos-14)
-              case "${{ github.event.inputs.arch }}" in
+              case "${{ inputs.arch }}" in
                 x64)   echo "arch=x86_64" >> $GITHUB_OUTPUT ;;
                 arm64) echo "arch=arm64" >> $GITHUB_OUTPUT ;;
-                *)     echo "Unsupported arch: ${{ github.event.inputs.arch }}"; exit 1 ;;
+                *)     echo "Unsupported arch: ${{ inputs.arch }}"; exit 1 ;;
               esac
-              echo "Running on macOS - ${{ github.event.inputs.os }}"
+              echo "Running on macOS - ${{ inputs.os }}"
               echo "platform=macos" >> $GITHUB_OUTPUT
               ;;
             ubuntu-latest)
-              case "${{ github.event.inputs.arch }}" in
+              case "${{ inputs.arch }}" in
                 x64)   echo "arch=x86_64" >> $GITHUB_OUTPUT ;;
                 arm64) echo "arch=aarch64" >> $GITHUB_OUTPUT ;;
-                *)     echo "Unsupported arch: ${{ github.event.inputs.arch }}"; exit 1 ;;
+                *)     echo "Unsupported arch: ${{ inputs.arch }}"; exit 1 ;;
               esac
-              echo "Running on Ubuntu - ${{ github.event.inputs.os }}"
+              echo "Running on Ubuntu - ${{ inputs.os }}"
               echo "platform=linux" >> $GITHUB_OUTPUT
               ;;
             windows-latest)
-              case "${{ github.event.inputs.arch }}" in
+              case "${{ inputs.arch }}" in
                 x64)   echo "arch=x64" >> $GITHUB_OUTPUT ;;
                 arm64) echo "arch=arm64" >> $GITHUB_OUTPUT ;;
-                *)     echo "Unsupported arch: ${{ github.event.inputs.arch }}"; exit 1 ;;
+                *)     echo "Unsupported arch: ${{ inputs.arch }}"; exit 1 ;;
               esac
-              echo "Running on Windows - ${{ github.event.inputs.os }}"
+              echo "Running on Windows - ${{ inputs.os }}"
               echo "platform=windows" >> $GITHUB_OUTPUT
               ;;
             *)
-              echo "Unsupported OS: ${{ github.event.inputs.os }}"
+              echo "Unsupported OS: ${{ inputs.os }}"
               exit 1
               ;;
           esac
@@ -156,6 +191,6 @@ jobs:
       - name: Run Shared Build Logic
         uses: ./.github/actions/build-logic
         with:
-          os: ${{ github.event.inputs.os }}
+          os: ${{ inputs.os }}
           arch: ${{ steps.set_env.outputs.arch }} 
           platform: ${{ steps.set_env.outputs.platform }}
