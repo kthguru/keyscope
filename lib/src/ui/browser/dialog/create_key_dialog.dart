@@ -17,6 +17,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../i18n.dart' show I18n;
 import '../../connection/repository/connection_repository.dart';
 
 class CreateKeyDialog extends ConsumerStatefulWidget {
@@ -60,9 +61,10 @@ class _CreateKeyDialogState extends ConsumerState<CreateKeyDialog> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Create New Key',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                Text(
+                  I18n.of(context).createNewKey,
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 24),
 
@@ -74,10 +76,11 @@ class _CreateKeyDialogState extends ConsumerState<CreateKeyDialog> {
                       flex: 2,
                       child: _buildTextField(
                         controller: _keyController,
-                        label: 'Key Name',
-                        hint: 'e.g. user:1001',
-                        validator: (v) =>
-                            v == null || v.isEmpty ? 'Required' : null,
+                        label: I18n.of(context).keyName,
+                        hint: '${I18n.of(context).eg} user:1001',
+                        validator: (v) => v == null || v.isEmpty
+                            ? I18n.of(context).required
+                            : null,
                       ),
                     ),
                     const SizedBox(width: 16),
@@ -85,10 +88,10 @@ class _CreateKeyDialogState extends ConsumerState<CreateKeyDialog> {
                       flex: 1,
                       child: DropdownButtonFormField<String>(
                         initialValue: _selectedType, // value: _selectedType,
-                        decoration: const InputDecoration(
-                          labelText: 'Type',
-                          border: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.symmetric(
+                        decoration: InputDecoration(
+                          labelText: I18n.of(context).type,
+                          border: const OutlineInputBorder(),
+                          contentPadding: const EdgeInsets.symmetric(
                             horizontal: 12,
                             vertical: 14,
                           ),
@@ -114,9 +117,9 @@ class _CreateKeyDialogState extends ConsumerState<CreateKeyDialog> {
                 const SizedBox(height: 16),
 
                 // 2. Dynamic Value Input based on Type
-                const Text(
-                  'Initial Value',
-                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                Text(
+                  I18n.of(context).initialValue,
+                  style: const TextStyle(color: Colors.grey, fontSize: 12),
                 ),
                 const SizedBox(height: 8),
                 _buildValueInputs(),
@@ -126,8 +129,8 @@ class _CreateKeyDialogState extends ConsumerState<CreateKeyDialog> {
                 // 3. TTL (Optional)
                 _buildTextField(
                   controller: _ttlController,
-                  label: 'TTL (Seconds, Optional)',
-                  hint: '-1 (Forever)',
+                  label: I18n.of(context).ttlSecondsOptional,
+                  hint: '-1 (${I18n.of(context).forever})',
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
 
@@ -139,11 +142,12 @@ class _CreateKeyDialogState extends ConsumerState<CreateKeyDialog> {
                   children: [
                     TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancel'),
+                      child: Text(I18n.of(context).cancel),
                     ),
                     const SizedBox(width: 12),
                     FilledButton(
-                        onPressed: _submit, child: const Text('Create')),
+                        onPressed: _submit,
+                        child: Text(I18n.of(context).create)),
                   ],
                 ),
               ],
@@ -157,9 +161,9 @@ class _CreateKeyDialogState extends ConsumerState<CreateKeyDialog> {
       case 'string':
         return _buildTextField(
           controller: _valueController,
-          label: 'Value',
+          label: I18n.of(context).value,
           maxLines: 3,
-          validator: (v) => v!.isEmpty ? 'Required' : null,
+          validator: (v) => v!.isEmpty ? I18n.of(context).required : null,
         );
       case 'hash':
         return Row(
@@ -167,16 +171,16 @@ class _CreateKeyDialogState extends ConsumerState<CreateKeyDialog> {
             Expanded(
               child: _buildTextField(
                 controller: _hashFieldController,
-                label: 'Field',
-                validator: (v) => v!.isEmpty ? 'Required' : null,
+                label: I18n.of(context).field,
+                validator: (v) => v!.isEmpty ? I18n.of(context).required : null,
               ),
             ),
             const SizedBox(width: 12),
             Expanded(
               child: _buildTextField(
                 controller: _hashValueController,
-                label: 'Value',
-                validator: (v) => v!.isEmpty ? 'Required' : null,
+                label: I18n.of(context).value,
+                validator: (v) => v!.isEmpty ? I18n.of(context).required : null,
               ),
             ),
           ],
@@ -184,14 +188,14 @@ class _CreateKeyDialogState extends ConsumerState<CreateKeyDialog> {
       case 'list':
         return _buildTextField(
           controller: _valueController,
-          label: 'Initial Item',
-          validator: (v) => v!.isEmpty ? 'Required' : null,
+          label: I18n.of(context).initialItem,
+          validator: (v) => v!.isEmpty ? I18n.of(context).required : null,
         );
       case 'set':
         return _buildTextField(
           controller: _valueController,
-          label: 'Member',
-          validator: (v) => v!.isEmpty ? 'Required' : null,
+          label: I18n.of(context).member,
+          validator: (v) => v!.isEmpty ? I18n.of(context).required : null,
         );
       case 'zset':
         return Row(
@@ -200,13 +204,13 @@ class _CreateKeyDialogState extends ConsumerState<CreateKeyDialog> {
               flex: 1,
               child: _buildTextField(
                 controller: _zScoreController,
-                label: 'Score',
+                label: I18n.of(context).score,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(
                     RegExp('[0-9.]'),
                   ), // RegExp(r'[0-9.]')
                 ],
-                validator: (v) => v!.isEmpty ? 'Required' : null,
+                validator: (v) => v!.isEmpty ? I18n.of(context).required : null,
               ),
             ),
             const SizedBox(width: 12),
@@ -214,8 +218,8 @@ class _CreateKeyDialogState extends ConsumerState<CreateKeyDialog> {
               flex: 2,
               child: _buildTextField(
                 controller: _zMemberController,
-                label: 'Member',
-                validator: (v) => v!.isEmpty ? 'Required' : null,
+                label: I18n.of(context).member,
+                validator: (v) => v!.isEmpty ? I18n.of(context).required : null,
               ),
             ),
           ],
@@ -281,7 +285,9 @@ class _CreateKeyDialogState extends ConsumerState<CreateKeyDialog> {
       Navigator.pop(context, true); // Return true to indicate success
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
+        SnackBar(
+            content: Text('${I18n.of(context).error}: $e'),
+            backgroundColor: Colors.red),
       );
     }
   }

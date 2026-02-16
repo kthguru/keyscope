@@ -16,6 +16,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../i18n.dart' show I18n;
 import '../browser/key_browser_screen.dart' show KeyBrowserScreen;
 import '../connection/repository/connection_repository.dart';
 
@@ -45,11 +46,11 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('Dashboard'),
+          title: Text(I18n.of(context).dashboard),
           actions: [
             IconButton(
               icon: const Icon(Icons.list_alt),
-              tooltip: 'Data Explorer',
+              tooltip: I18n.of(context).dataExplorer,
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute<DashboardScreen>(
@@ -58,14 +59,17 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 );
               },
             ),
-            IconButton(icon: const Icon(Icons.refresh), onPressed: _refresh),
+            IconButton(
+                icon: const Icon(Icons.refresh),
+                tooltip: I18n.of(context).refresh,
+                onPressed: _refresh),
             IconButton(
               icon: const Icon(Icons.power_settings_new),
               onPressed: () {
                 ref.read(connectionRepositoryProvider).disconnect();
                 Navigator.of(context).pop(); // Go back to Home
               },
-              tooltip: 'Disconnect',
+              tooltip: I18n.of(context).disconnect,
             ),
           ],
         ),
@@ -82,13 +86,16 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     const Icon(Icons.error_outline,
                         color: Colors.red, size: 48),
                     const SizedBox(height: 16),
-                    Text('Error fetching INFO: ${snapshot.error}'),
-                    TextButton(onPressed: _refresh, child: const Text('Retry')),
+                    Text('${I18n.of(context).errorFetchingInfo}: '
+                        '${snapshot.error}'),
+                    TextButton(
+                        onPressed: _refresh,
+                        child: Text(I18n.of(context).retry)),
                   ],
                 ),
               );
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Center(child: Text('No info available'));
+              return Center(child: Text(I18n.of(context).noInfoAvailable));
             }
 
             final info = snapshot.data!;
@@ -97,43 +104,44 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildSectionTitle('Server'),
+                  _buildSectionTitle(I18n.of(context).server),
                   _buildInfoGrid([
                     _InfoItem(
-                      'Version',
+                      I18n.of(context).version,
                       info['valkey_version'] ?? info['redis_version'] ?? 'N/A',
                     ),
-                    _InfoItem('OS', info['os'] ?? 'N/A'),
-                    _InfoItem('Port', info['tcp_port'] ?? 'N/A'),
-                    _InfoItem('Uptime', '${info['uptime_in_days']} days'),
+                    _InfoItem(I18n.of(context).os, info['os'] ?? 'N/A'),
+                    _InfoItem(I18n.of(context).port, info['tcp_port'] ?? 'N/A'),
+                    _InfoItem(I18n.of(context).uptime,
+                        '${info['uptime_in_days']} days'),
                   ]),
                   const SizedBox(height: 24),
-                  _buildSectionTitle('Memory'),
+                  _buildSectionTitle(I18n.of(context).memory),
                   _buildInfoGrid([
+                    _InfoItem(I18n.of(context).usedMemory,
+                        info['used_memory_human'] ?? 'N/A'),
                     _InfoItem(
-                        'Used Memory', info['used_memory_human'] ?? 'N/A'),
-                    _InfoItem(
-                      'Peak Memory',
+                      I18n.of(context).peakMemory,
                       info['used_memory_peak_human'] ?? 'N/A',
                     ),
                     _InfoItem(
-                      'Frag Ratio',
+                      I18n.of(context).fragRatio,
                       info['mem_fragmentation_ratio'] ?? 'N/A',
                     ),
                   ]),
                   const SizedBox(height: 24),
-                  _buildSectionTitle('Stats'),
+                  _buildSectionTitle(I18n.of(context).stats),
                   _buildInfoGrid([
                     _InfoItem(
-                      'Connected Clients',
+                      I18n.of(context).connectedClients,
                       info['connected_clients'] ?? 'N/A',
                     ),
                     _InfoItem(
-                      'Total Connections',
+                      I18n.of(context).totalConnections,
                       info['total_connections_received'] ?? 'N/A',
                     ),
                     _InfoItem(
-                      'Total Commands',
+                      I18n.of(context).totalCommands,
                       info['total_commands_processed'] ?? 'N/A',
                     ),
                   ]),

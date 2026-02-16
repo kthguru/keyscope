@@ -17,6 +17,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../i18n.dart' show I18n;
 import 'dialog/create_key_dialog.dart';
 import 'key_detail_panel.dart';
 import 'logic/key_browser_provider.dart';
@@ -59,7 +60,7 @@ class _KeyBrowserScreenState extends ConsumerState<KeyBrowserScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Data Explorer'),
+        title: Text(I18n.of(context).dataExplorer),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -68,6 +69,7 @@ class _KeyBrowserScreenState extends ConsumerState<KeyBrowserScreen> {
                   .read(keyBrowserProvider.notifier)
                   .refresh(pattern: _searchController.text);
             },
+            tooltip: I18n.of(context).refresh,
           ),
         ],
       ),
@@ -85,14 +87,14 @@ class _KeyBrowserScreenState extends ConsumerState<KeyBrowserScreen> {
 
             if (!mounted) return;
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Key created successfully!'),
+              SnackBar(
+                content: Text(I18n.of(context).keyCreatedSuccessfully1),
                 backgroundColor: Colors.green,
               ),
             );
           }
         },
-        tooltip: 'Create New Key',
+        tooltip: I18n.of(context).createNewKey,
         child: const Icon(Icons.add),
       ),
       body: Row(
@@ -111,7 +113,7 @@ class _KeyBrowserScreenState extends ConsumerState<KeyBrowserScreen> {
                   child: TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
-                      hintText: 'Search keys (e.g. user:*)',
+                      hintText: I18n.of(context).searchKeysHint,
                       prefixIcon: const Icon(Icons.search, size: 18),
                       isDense: true,
                       border: OutlineInputBorder(
@@ -185,7 +187,8 @@ class _KeyBrowserScreenState extends ConsumerState<KeyBrowserScreen> {
                   child: Row(
                     children: [
                       Text(
-                        '${browserState.keys.length} keys loaded',
+                        I18n.of(context).keysLoaded(
+                            keysLength: browserState.keys.length.toString()),
                         style: const TextStyle(
                           fontSize: 11,
                           color: Colors.grey,

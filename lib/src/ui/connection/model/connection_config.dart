@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/// Represents the configuration for a single Redis/Valkey connection.
+/// Represents the configuration for a single Redis/Valkey/Dragonfly connection.
 class ConnectionConfig {
   final String id;
   String name;
@@ -27,7 +27,7 @@ class ConnectionConfig {
 
   ConnectionConfig({
     required this.id,
-    this.name = 'New Connection',
+    this.name = 'New Connection', // No need to translate.
     this.host = '127.0.0.1',
     this.port = 6379,
     this.username,

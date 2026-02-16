@@ -90,7 +90,8 @@ class _KeyDetailPanelState extends ConsumerState<KeyDetailPanel> {
       child: asyncValue.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(
-          child: Text('Error: $err', style: const TextStyle(color: Colors.red)),
+          child: Text('${I18n.of(context).error}: $err',
+              style: const TextStyle(color: Colors.red)),
         ),
         // data: _buildDetailView,
         data: (detail) {
@@ -148,7 +149,9 @@ class _KeyDetailPanelState extends ConsumerState<KeyDetailPanel> {
                 const Icon(Icons.timer, size: 16, color: Colors.grey),
                 const SizedBox(width: 4),
                 Text(
-                  detail.ttl == -1 ? 'Forever' : '${detail.ttl}s',
+                  detail.ttl == -1
+                      ? I18n.of(context).forever
+                      : '${detail.ttl}s',
                   style: const TextStyle(color: Colors.grey),
                 ),
 
@@ -348,6 +351,7 @@ class _KeyDetailPanelState extends ConsumerState<KeyDetailPanel> {
                       icon: const Icon(Icons.edit, size: 16),
                       onPressed: () =>
                           _showEditHashDialog(detail, field, value),
+                      tooltip: I18n.of(context).editValue,
                     ),
                     IconButton(
                       icon: const Icon(
@@ -391,6 +395,7 @@ class _KeyDetailPanelState extends ConsumerState<KeyDetailPanel> {
               IconButton(
                 icon: const Icon(Icons.edit, size: 16),
                 onPressed: () => _showEditListDialog(detail, index, value),
+                tooltip: I18n.of(context).editValue,
               ),
               IconButton(
                 icon: const Icon(
@@ -467,6 +472,7 @@ class _KeyDetailPanelState extends ConsumerState<KeyDetailPanel> {
                       icon: const Icon(Icons.edit, size: 16),
                       onPressed: () =>
                           _showEditZSetDialog(detail, member, score),
+                      tooltip: I18n.of(context).editValue,
                     ),
                     IconButton(
                       icon: const Icon(
@@ -565,7 +571,7 @@ class _KeyDetailPanelState extends ConsumerState<KeyDetailPanel> {
     );
     if (confirm ?? false) {
       ref.invalidate(keyDetailProvider(widget.selectedKey!));
-      _showSuccess('Operation successful');
+      _showSuccess(I18n.of(context).operationSuccessful);
     }
   }
 
@@ -574,7 +580,7 @@ class _KeyDetailPanelState extends ConsumerState<KeyDetailPanel> {
     final fieldCtrl = TextEditingController();
     final valCtrl = TextEditingController();
     _showInputDialog(
-      title: 'Add Hash Field',
+      title: I18n.of(context).addHashField,
       inputs: [
         TextField(
           controller: fieldCtrl,
@@ -627,7 +633,7 @@ class _KeyDetailPanelState extends ConsumerState<KeyDetailPanel> {
   void _showAddListDialog(KeyDetail detail) {
     final valCtrl = TextEditingController();
     _showInputDialog(
-      title: 'Add List Item (RPUSH)',
+      title: '${I18n.of(context).addListItem} (RPUSH)',
       inputs: [
         TextField(
           controller: valCtrl,
@@ -643,7 +649,7 @@ class _KeyDetailPanelState extends ConsumerState<KeyDetailPanel> {
   void _showEditListDialog(KeyDetail detail, int index, String currentValue) {
     final valCtrl = TextEditingController(text: currentValue);
     _showInputDialog(
-      title: 'Edit Item at #$index',
+      title: I18n.of(context).editItemAt(index: index.toString()),
       inputs: [
         TextField(
           controller: valCtrl,
@@ -729,7 +735,7 @@ class _KeyDetailPanelState extends ConsumerState<KeyDetailPanel> {
   ) {
     final scoreCtrl = TextEditingController(text: currentScore);
     _showInputDialog(
-      title: 'Update Score: $member',
+      title: I18n.of(context).updateScore(member: member),
       inputs: [
         TextField(
           controller: scoreCtrl,

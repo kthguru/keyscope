@@ -17,6 +17,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../i18n.dart' show I18n;
 import '../dashboard/dashboard_screen.dart';
 import 'model/connection_config.dart';
 import 'repository/connection_repository.dart';
@@ -32,8 +33,10 @@ class _ConnectionDialogState extends ConsumerState<ConnectionDialog> {
   // Temporary list for UI demonstration
   final List<ConnectionConfig> _savedConnections = [
     ConnectionConfig(id: '1', name: 'myRedis-Local', port: 6379),
+    ConnectionConfig(id: '2', name: 'myValkey-Local', port: 6379),
+    ConnectionConfig(id: '3', name: 'myDragonfly-Local', port: 6379),
     ConnectionConfig(
-      id: '2',
+      id: '4',
       name: 'Production-Cluster',
       host: '127.0.0.1',
       port: 7001,
@@ -106,9 +109,9 @@ class _ConnectionDialogState extends ConsumerState<ConnectionDialog> {
                 children: [
                   const Icon(Icons.storage, size: 16, color: Colors.grey),
                   const SizedBox(width: 8),
-                  const Text(
-                    'Connections',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  Text(
+                    I18n.of(context).connections,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const Spacer(),
                   IconButton(
@@ -158,7 +161,7 @@ class _ConnectionDialogState extends ConsumerState<ConnectionDialog> {
             child: Row(
               children: [
                 Text(
-                  'Edit Connection',
+                  I18n.of(context).editConnection,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -179,37 +182,40 @@ class _ConnectionDialogState extends ConsumerState<ConnectionDialog> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildSectionHeader('General'),
-                    _buildTextField('Name', _nameController),
+                    _buildSectionHeader(I18n.of(context).general),
+                    _buildTextField(I18n.of(context).name, _nameController),
                     const SizedBox(height: 16),
-                    _buildSectionHeader('Connection Details'),
+                    _buildSectionHeader(I18n.of(context).connectionDetails),
                     Row(
                       children: [
                         Expanded(
                           flex: 3,
-                          child: _buildTextField('Host', _hostController),
+                          child: _buildTextField(
+                              I18n.of(context).host, _hostController),
                         ),
                         const SizedBox(width: 16),
                         Expanded(
                           flex: 1,
-                          child: _buildTextField('Port', _portController),
+                          child: _buildTextField(
+                              I18n.of(context).port, _portController),
                         ),
                       ],
                     ),
                     const SizedBox(height: 16),
-                    _buildTextField('Username', _usernameController),
+                    _buildTextField(
+                        I18n.of(context).username, _usernameController),
                     const SizedBox(height: 16),
                     _buildTextField(
-                      'Password',
+                      I18n.of(context).password,
                       _passwordController,
                       obscureText: true,
                     ),
                     const SizedBox(height: 24),
-                    _buildSectionHeader('Advanced'),
+                    _buildSectionHeader(I18n.of(context).advanced),
                     CheckboxListTile(
-                      title: const Text(
-                        'Use SSH Tunneling',
-                        style: TextStyle(fontSize: 13),
+                      title: Text(
+                        I18n.of(context).useSshTunneling,
+                        style: const TextStyle(fontSize: 13),
                       ),
                       value: _selectedConfig.useSsh,
                       onChanged: (val) {
@@ -237,13 +243,13 @@ class _ConnectionDialogState extends ConsumerState<ConnectionDialog> {
               children: [
                 TextButton(
                   onPressed: _testConnection,
-                  child: const Text('Test Connection'),
+                  child: Text(I18n.of(context).testConnection),
                 ),
                 Row(
                   children: [
                     OutlinedButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('Cancel'),
+                      child: Text(I18n.of(context).cancel),
                     ),
                     const SizedBox(width: 12),
                     FilledButton(
@@ -251,9 +257,9 @@ class _ConnectionDialogState extends ConsumerState<ConnectionDialog> {
                         try {
                           // 1. Show loading indicator
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Connecting...'),
-                              duration: Duration(milliseconds: 500),
+                            SnackBar(
+                              content: Text(I18n.of(context).connecting),
+                              duration: const Duration(milliseconds: 500),
                             ),
                           );
 
@@ -272,13 +278,13 @@ class _ConnectionDialogState extends ConsumerState<ConnectionDialog> {
                           if (!mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text('❌ Error: $e'),
+                              content: Text('❌ ${I18n.of(context).error}}: $e'),
                               backgroundColor: Colors.red,
                             ),
                           );
                         }
                       },
-                      child: const Text('OK'),
+                      child: Text(I18n.of(context).ok),
                     ),
                   ],
                 ),
@@ -377,7 +383,8 @@ class _ConnectionDialogState extends ConsumerState<ConnectionDialog> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            '✅ Connection Successful! (SSH: ${_selectedConfig.useSsh})',
+            '✅ ${I18n.of(context).connectionSuccessful1} '
+            '(SSH: ${_selectedConfig.useSsh})',
           ),
           backgroundColor: Colors.green,
           behavior: SnackBarBehavior.floating,
@@ -386,7 +393,9 @@ class _ConnectionDialogState extends ConsumerState<ConnectionDialog> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('❌ Error: $e'), backgroundColor: Colors.red),
+        SnackBar(
+            content: Text('❌ ${I18n.of(context).error}: $e'),
+            backgroundColor: Colors.red),
       );
     }
   }
