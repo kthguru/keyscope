@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.3
+* **Refactor (i18n)**: Externalized all text resources to `assets/i18n.csv` and applied localization keys to UI components via generated `lib/i18n.dart`.
+* **Style**: Updated `tool/i18n_generator.dart` to enforce 80-character line limit in generated `lib/i18n.dart`.
+
 ## 0.8.2
 * **Fix (Example)**: Replaced MaterialApp wrapper with KeyscopeApp to ensure locale and theme settings are applied correctly.
 
