@@ -401,7 +401,6 @@ class BasicConnectionRepository implements ConnectionRepository {
   @override
   Future<int> deleteHashField(String key, String field) async {
     if (_client == null) throw Exception('Not connected');
-    await _client!.hDel(key, [field]);
     return _client!.hDel(key, [field]); // deleted counts
   }
 
