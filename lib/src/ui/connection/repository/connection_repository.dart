@@ -79,8 +79,8 @@ abstract class ConnectionRepository {
   //   throw UnimplementedError('');
   // }
 
-  Future<void> deleteKey(String key) async => {};
-  Future<void> setStringValue(String key, String value, {int? ttl}) async => {};
+  Future<void> deleteKey(String key);
+  Future<void> setStringValue(String key, String value, {int? ttl});
 
   Future<void> createKey({
     required String key,
