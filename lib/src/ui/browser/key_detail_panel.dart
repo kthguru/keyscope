@@ -492,33 +492,22 @@ class _KeyDetailPanelState extends ConsumerState<KeyDetailPanel> {
     );
   }
 
-  Color _getTypeColor(String type) {
-    switch (type) {
-      case 'string':
-        return Colors.blue;
-      case 'hash':
-        return Colors.green;
-      case 'list':
-        return Colors.orange;
-      case 'set':
-        return Colors.purple;
-      case 'zset':
-        return Colors.indigo;
-      case 'ReJSON-RL':
-        return Colors.brown;
-      case 'stream':
-        return Colors.blueGrey;
-      case 'MBbloom--':
-        return Colors.pink;
-      case 'vectorset':
-        return Colors.amber;
-      case 'TSDB-TYPE':
-        return Colors.teal;
-      default:
-        print('Type: $type');
-        return Colors.grey;
-    }
-  }
+  Color _getTypeColor(String type) => switch (type) {
+    'string' => Colors.blue,
+    'hash' => Colors.green,
+    'list' => Colors.orange,
+    'set' => Colors.purple,
+    'zset' => Colors.indigo,
+    'ReJSON-RL' => Colors.brown,
+    'stream' => Colors.blueGrey,
+    'MBbloom--' => Colors.pink,
+    'vectorset' => Colors.amber,
+    'TSDB-TYPE' => Colors.teal,
+    _ => () {
+      print('Type: $type');
+      return Colors.grey;
+    }(),
+  };  
 
   // --- Actions & Dialogs ---
 
